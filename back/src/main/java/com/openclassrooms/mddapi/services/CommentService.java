@@ -1,7 +1,5 @@
 package com.openclassrooms.mddapi.services;
 
-import java.util.Optional;
-
 import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
@@ -21,7 +19,7 @@ public class CommentService {
 	public void saveComment(Comment comment) {
 		commentRepository.save(comment);
 	}
-	public Optional<Comment> findById(Long id) {
-		return commentRepository.findById(id);
+	public Comment findById(Long id) {
+		return commentRepository.findById(id).orElse(null);
 	}
 }

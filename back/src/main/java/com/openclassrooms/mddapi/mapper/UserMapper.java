@@ -14,13 +14,14 @@ import org.springframework.stereotype.Component;
 import com.openclassrooms.mddapi.dto.UserDto;
 import com.openclassrooms.mddapi.models.Article;
 import com.openclassrooms.mddapi.models.Comment;
+import com.openclassrooms.mddapi.models.Topic;
 import com.openclassrooms.mddapi.models.User;
 import com.openclassrooms.mddapi.services.ArticleService;
 import com.openclassrooms.mddapi.services.CommentService;
 import com.openclassrooms.mddapi.services.TopicService;
 
 @Component
-@Mapper(componentModel = "spring", imports = {Arrays.class, Collectors.class, Article.class, Collections.class, Optional.class, Comment.class})
+@Mapper(componentModel = "spring", imports = {Arrays.class, Collectors.class, Article.class, Collections.class, Optional.class, Comment.class, Topic.class})
 public abstract class UserMapper implements EntityMapper<UserDto, User>{
 	@Autowired
 	CommentService commentService;
@@ -32,7 +33,7 @@ public abstract class UserMapper implements EntityMapper<UserDto, User>{
 	@Mappings({
 		@Mapping(target="comments", expression="java(Optional.ofNullable(userDto.getComments()).orElseGet(Collections::emptyList).stream().map(commmentId -> { Comment comment = this.commentService.findById(commmentId); if (comment != null) { return comment; } return null; }).collect(Collectors.toList()))"),
 		@Mapping(target="articles", expression="java(Optional.ofNullable(userDto.getArticles()).orElseGet(Collections::emptyList).stream().map(articleId -> { Article article = this.articleService.findById(articleId); if (article != null) { return article; } return null; }).collect(Collectors.toList()))"),
-		@Mapping(target="topics", expression="java(Optional.ofNullable(userDto.getTopics()).orElseGet(Collections::emptyList).stream().map(topicId -> { Topic topic = this.topicService.findById(topicId); if (comment != null) { return topic; } return null; }).collect(Collectors.toList()))"),
+		@Mapping(target="topics", expression="java(Optional.ofNullable(userDto.getTopics()).orElseGet(Collections::emptyList).stream().map(topicId -> { Topic topic = this.topicService.findById(topicId); if (topic != null) { return topic; } return null; }).collect(Collectors.toList()))"),
 
 	})
 	public abstract User toEntity(UserDto userDto);

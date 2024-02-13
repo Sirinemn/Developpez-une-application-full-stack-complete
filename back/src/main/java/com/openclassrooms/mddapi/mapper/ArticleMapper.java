@@ -31,7 +31,7 @@ public abstract class ArticleMapper implements EntityMapper<ArticleDto, Article>
 	
 	@Mappings({
 		@Mapping(target="comments", expression="java(Optional.ofNullable(articleDto.getComments()).orElseGet(Collections::emptyList).stream().map(commmentId -> { Comment comment = this.commentService.findById(commmentId); if (comment != null) { return comment; } return null; }).collect(Collectors.toList()))"),
-		@Mapping(target="user", expression="java(articleDto.getUserId() != null ? this.userService.findById(articleDto.getUserId() : null)"),
+		@Mapping(target="user", expression="java(articleDto.getUserId() != null ? this.userService.findById(articleDto.getUserId()): null)"),
 		@Mapping(target="topic", expression="java(articleDto.getTopicId() != null ? this.topicService.findById(articleDto.getTopicId()) : null)"),
 
 	})

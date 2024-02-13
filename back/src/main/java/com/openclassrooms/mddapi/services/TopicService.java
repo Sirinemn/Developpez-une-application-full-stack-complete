@@ -1,7 +1,6 @@
 package com.openclassrooms.mddapi.services;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -21,8 +20,8 @@ public class TopicService {
 	public List<Topic> findAll(){
 		return topicRepository.findAll();
 	}
-	public Optional<Topic> findById(Long id) {
-		return topicRepository.findById(id);
+	public Topic findById(Long id) {
+		return topicRepository.findById(id).orElse(null);
 	}
 
 }

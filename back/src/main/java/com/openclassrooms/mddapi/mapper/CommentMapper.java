@@ -18,7 +18,7 @@ import com.openclassrooms.mddapi.services.ArticleService;
 import com.openclassrooms.mddapi.services.UserService;
 
 @Component
-@Mapper(componentModel = "spring", imports = {Arrays.class, Collectors.class, Article.class, Collections.class, Optional.class, Comment.class})
+@Mapper(componentModel = "spring",uses={ArticleService.class}, imports = {Arrays.class, Collectors.class, Article.class, Collections.class, Optional.class, ArticleService.class})
 public abstract class CommentMapper implements EntityMapper<CommentDto, Comment>{
 	
 	@Autowired
@@ -28,7 +28,7 @@ public abstract class CommentMapper implements EntityMapper<CommentDto, Comment>
 
 	
 	@Mappings({
-		@Mapping(target="user", expression="java(commentDto.getUserId() != null ? this.userService.findById(commentDto.getUserId() : null)"),
+		@Mapping(target="user", expression="java(commentDto.getUserId() != null ? this.userService.findById(commentDto.getUserId()) : null)"),
 		@Mapping(target="article", expression="java(commentDto.getArticleId() != null ? this.articleService.findById(commentDto.getArticleId()) : null)"),
 
 	})
