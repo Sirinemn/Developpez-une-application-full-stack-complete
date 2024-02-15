@@ -1,25 +1,26 @@
 package com.openclassrooms.mddapi.models;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.Size;
+import java.util.Set;
 
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 
-
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.NonNull;
 @Entity
@@ -58,6 +59,11 @@ public class User {
 	  @Column(name = "updated_at")
 	  private LocalDateTime updatedAt;
 	  
+	  @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+		@JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id", table="USERS"),
+		inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id", table="role"))
+		private List<Role> roles;
+	  
 	  @ManyToMany(
 				mappedBy = "users",
 						cascade = { 
@@ -65,19 +71,20 @@ public class User {
 								CascadeType.MERGE 
 								}
 				)
-	  private List<Topic> Topics = new ArrayList<>();
+	  private Set<Topic> topics;
 	  
 	  @OneToMany(
 				mappedBy = "user", 
 				cascade = CascadeType.ALL,
 				orphanRemoval = true
 				)
-	  List<Comment> comments = new ArrayList<>();
+	  private Set<Comment> comments;
 	  
 	  @OneToMany(
 				mappedBy = "user", 
 				cascade = CascadeType.ALL,
 				orphanRemoval = true
 				)
-	  List<Article> articles = new ArrayList<>();
+	  private Set<Article> articles;
+	  
 }

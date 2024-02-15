@@ -1,13 +1,12 @@
 package com.openclassrooms.mddapi.dto;
 
 
-import java.util.List;
-
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import java.util.Set;
 
 import com.openclassrooms.mddapi.enumeration.Topics;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,8 +23,8 @@ public class TopicDto {
     @Size(max = 20)
 	private Topics name;
     
-    List<Long> articles;
+    Set<Long> articles;
     
-    List<Long> users;
+    Set<Long> users;
 
 }

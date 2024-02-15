@@ -1,8 +1,8 @@
 package com.openclassrooms.mddapi.services;
 
+import java.util.Set;
 import java.util.stream.Collectors;
 
-import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
@@ -12,6 +12,8 @@ import com.openclassrooms.mddapi.models.Topic;
 import com.openclassrooms.mddapi.models.User;
 import com.openclassrooms.mddapi.repository.TopicRepository;
 import com.openclassrooms.mddapi.repository.UserRepository;
+
+import jakarta.transaction.Transactional;
 
 
 @Service
@@ -56,7 +58,7 @@ public class UserService {
 	        if(alreadySubscribe) {
 	            throw new BadRequestException();
 	        }
-	    	user.setTopics(user.getTopics().stream().filter(topics -> !topics.getId().equals(topicId)).collect(Collectors.toList()));
+	    	user.setTopics((Set<Topic>) user.getTopics().stream().filter(topics -> !topics.getId().equals(topicId)).collect(Collectors.toSet()));
 	    	this.userRepository.save(user);
 
 	    }

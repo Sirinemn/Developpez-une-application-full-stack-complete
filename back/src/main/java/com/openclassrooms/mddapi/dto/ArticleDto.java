@@ -2,12 +2,11 @@ package com.openclassrooms.mddapi.dto;
 
 import java.time.LocalDateTime;
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -35,7 +34,7 @@ public class ArticleDto {
 
 	private LocalDateTime updatedAt;
 	
-    List<Long> comments;
+    Set<Long> comments;
     @NotNull
     private Long topicId;
     

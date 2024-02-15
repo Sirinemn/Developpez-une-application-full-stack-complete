@@ -2,10 +2,10 @@ package com.openclassrooms.mddapi.dto;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.Size;
-
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -36,12 +36,13 @@ public class UserDto {
 	  @Size(max = 120)
 	  private String password;
 	  
-	  List<Long> topics;
+	  Set<Long> topics;
 	  
-	  List<Long> comments;
+	  Set<Long> comments;
 
-	  List<Long> articles;
-
+	  Set<Long> articles;
+	  
+	  List<Long> roles;
 
 	  private LocalDateTime createdAt;
 

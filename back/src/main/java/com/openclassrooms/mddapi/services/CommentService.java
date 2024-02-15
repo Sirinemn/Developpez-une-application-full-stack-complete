@@ -1,11 +1,12 @@
 package com.openclassrooms.mddapi.services;
 
-import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
 import com.openclassrooms.mddapi.models.Comment;
 import com.openclassrooms.mddapi.repository.CommentRepository;
+
+import jakarta.transaction.Transactional;
 
 @Service
 @Transactional

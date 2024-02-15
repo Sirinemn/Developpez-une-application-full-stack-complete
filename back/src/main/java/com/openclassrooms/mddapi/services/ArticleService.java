@@ -2,12 +2,13 @@ package com.openclassrooms.mddapi.services;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
 import com.openclassrooms.mddapi.models.Article;
 import com.openclassrooms.mddapi.repository.ArticleRepository;
+
+import jakarta.transaction.Transactional;
 
 @Service
 @Transactional

@@ -28,14 +28,14 @@ public abstract class TopicMapper implements EntityMapper<TopicDto, Topic>{
 	UserService userService;
 	
 	@Mappings({
-	@Mapping(target="articles", expression="java(Optional.ofNullable(topicDto.getArticles()).orElseGet(Collections::emptyList).stream().map(articleId -> { Article article = this.articleService.findById(articleId); if (article != null) { return article; } return null; }).collect(Collectors.toList()))"),
-	@Mapping(target="users", expression="java(Optional.ofNullable(topicDto.getUsers()).orElseGet(Collections::emptyList).stream().map(userId -> { User user = this.userService.findById(userId); if (user != null) { return user; } return null; }).collect(Collectors.toList()))"),
+	@Mapping(target="articles", expression="java(Optional.ofNullable(topicDto.getArticles()).orElseGet(Collections::emptySet).stream().map(articleId -> { Article article = this.articleService.findById(articleId); if (article != null) { return article; } return null; }).collect(Collectors.toSet()))"),
+	@Mapping(target="users", expression="java(Optional.ofNullable(topicDto.getUsers()).orElseGet(Collections::emptySet).stream().map(userId -> { User user = this.userService.findById(userId); if (user != null) { return user; } return null; }).collect(Collectors.toSet()))"),
 	})
 	public abstract Topic toEntity(TopicDto topicDto);
 	
 	@Mappings({
-	@Mapping(target="articles", expression="java(Optional.ofNullable(topic.getArticles()).orElseGet(Collections::emptyList).stream().map(a -> a.getId()).collect(Collectors.toList()))"),
-	@Mapping(target="users", expression="java(Optional.ofNullable(topic.getUsers()).orElseGet(Collections::emptyList).stream().map(u -> u.getId()).collect(Collectors.toList()))"),
+	@Mapping(target="articles", expression="java(Optional.ofNullable(topic.getArticles()).orElseGet(Collections::emptySet).stream().map(a -> a.getId()).collect(Collectors.toSet()))"),
+	@Mapping(target="users", expression="java(Optional.ofNullable(topic.getUsers()).orElseGet(Collections::emptySet).stream().map(u -> u.getId()).collect(Collectors.toSet()))"),
 	})
 	public abstract TopicDto toDto(Topic topic);
 
