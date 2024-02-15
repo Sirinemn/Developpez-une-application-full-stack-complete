@@ -7,39 +7,53 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.openclassrooms.mddapi.exception.BadRequestException;
 import com.openclassrooms.mddapi.jwt.TokenProvider;
-import com.openclassrooms.mddapi.payload.request.RegisterRequest;
-import com.openclassrooms.mddapi.services.AuthService;
+import com.openclassrooms.mddapi.mapper.UserMapper;
+import com.openclassrooms.mddapi.services.UserService;
+
+import jakarta.validation.Valid;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.openclassrooms.mddapi.dto.UserDto;
+import com.openclassrooms.mddapi.models.User;
+import com.openclassrooms.mddapi.payload.request.LoginRequest;
+
 
 @RestController
-@RequestMapping("/api/auth")
-public class AuthController {
-	private AuthService authService;
-	private TokenProvider tokenProvider;
-	private AuthenticationManager authenticationManager;
+@RequestMapping("/api/user")
+public class UserController {
+	private final TokenProvider tokenProvider;
+	private final UserService userService;
+	private final UserMapper userMapper;
 	private final String AUTHORIZATION_HEADER = "Authorization";
 
-	public AuthController(AuthService authService, TokenProvider tokenProvider,
-			AuthenticationManager authenticationManager) {
-		this.authService = authService;
+	private final AuthenticationManager authenticationManager;
+
+	public UserController(UserMapper userMapper,TokenProvider tokenProvider, AuthenticationManager authenticationManager,
+			UserService userService) {
 		this.tokenProvider = tokenProvider;
+		this.userService = userService;
+		this.userMapper = userMapper;
 		this.authenticationManager = authenticationManager;
 	}
+	@GetMapping("/{id}")
+	public ResponseEntity<UserDto> getUser(@PathVariable Long id) {
+		User user = userService.findById(id);
+		
+		return ResponseEntity.ok(this.userMapper.toDto(user));
+	}
+	@PostMapping("/login")
+	public ResponseEntity<JWTToken> authorize(@Valid @RequestBody LoginRequest login) {
 
-	@PostMapping("/register")
-	public ResponseEntity<JWTToken> register(
-			@RequestBody RegisterRequest register)
-			throws BadRequestException {
-		authService.save(register);
 		UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-				register.getEmail(), register.getPassword());
+				login.getEmail(), login.getPassword());
 
 		Authentication authentication = this.authenticationManager.authenticate(authenticationToken);
 		SecurityContextHolder.getContext().setAuthentication(authentication);

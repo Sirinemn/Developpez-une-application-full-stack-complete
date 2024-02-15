@@ -15,25 +15,11 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-02-15T15:38:05+0100",
+    date = "2024-02-15T16:21:20+0100",
     comments = "version: 1.5.1.Final, compiler: Eclipse JDT (IDE) 3.35.0.v20230814-2020, environment: Java 17.0.8.1 (Eclipse Adoptium)"
 )
 @Component
 public class TopicMapperImpl extends TopicMapper {
-
-    @Override
-    public List<Topic> toEntity(List<TopicDto> dtoList) {
-        if ( dtoList == null ) {
-            return null;
-        }
-
-        List<Topic> list = new ArrayList<Topic>( dtoList.size() );
-        for ( TopicDto topicDto : dtoList ) {
-            list.add( toEntity( topicDto ) );
-        }
-
-        return list;
-    }
 
     @Override
     public List<TopicDto> toDto(List<Topic> entityList) {
@@ -44,6 +30,20 @@ public class TopicMapperImpl extends TopicMapper {
         List<TopicDto> list = new ArrayList<TopicDto>( entityList.size() );
         for ( Topic topic : entityList ) {
             list.add( toDto( topic ) );
+        }
+
+        return list;
+    }
+
+    @Override
+    public List<Topic> toEntity(List<TopicDto> dtoList) {
+        if ( dtoList == null ) {
+            return null;
+        }
+
+        List<Topic> list = new ArrayList<Topic>( dtoList.size() );
+        for ( TopicDto topicDto : dtoList ) {
+            list.add( toEntity( topicDto ) );
         }
 
         return list;

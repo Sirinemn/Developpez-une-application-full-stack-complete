@@ -17,25 +17,11 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-02-15T15:38:05+0100",
+    date = "2024-02-15T16:21:20+0100",
     comments = "version: 1.5.1.Final, compiler: Eclipse JDT (IDE) 3.35.0.v20230814-2020, environment: Java 17.0.8.1 (Eclipse Adoptium)"
 )
 @Component
 public class UserMapperImpl extends UserMapper {
-
-    @Override
-    public List<User> toEntity(List<UserDto> dtoList) {
-        if ( dtoList == null ) {
-            return null;
-        }
-
-        List<User> list = new ArrayList<User>( dtoList.size() );
-        for ( UserDto userDto : dtoList ) {
-            list.add( toEntity( userDto ) );
-        }
-
-        return list;
-    }
 
     @Override
     public List<UserDto> toDto(List<User> entityList) {
@@ -52,25 +38,33 @@ public class UserMapperImpl extends UserMapper {
     }
 
     @Override
+    public List<User> toEntity(List<UserDto> dtoList) {
+        if ( dtoList == null ) {
+            return null;
+        }
+
+        List<User> list = new ArrayList<User>( dtoList.size() );
+        for ( UserDto userDto : dtoList ) {
+            list.add( toEntity( userDto ) );
+        }
+
+        return list;
+    }
+
+    @Override
     public User toEntity(UserDto userDto) {
         if ( userDto == null ) {
             return null;
         }
 
-        String email = null;
-        String firstName = null;
-        String lastName = null;
-        String password = null;
-
-        email = userDto.getEmail();
-        firstName = userDto.getFirstName();
-        lastName = userDto.getLastName();
-        password = userDto.getPassword();
-
-        User user = new User( email, lastName, firstName, password );
+        User user = new User();
 
         user.setCreatedAt( userDto.getCreatedAt() );
+        user.setEmail( userDto.getEmail() );
+        user.setFirstName( userDto.getFirstName() );
         user.setId( userDto.getId() );
+        user.setLastName( userDto.getLastName() );
+        user.setPassword( userDto.getPassword() );
         user.setUpdatedAt( userDto.getUpdatedAt() );
 
         user.setComments( Optional.ofNullable(userDto.getComments()).orElseGet(Collections::emptySet).stream().map(commmentId -> { Comment comment = this.commentService.findById(commmentId); if (comment != null) { return comment; } return null; }).collect(Collectors.toSet()) );

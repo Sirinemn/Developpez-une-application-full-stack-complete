@@ -21,11 +21,17 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 @Entity
 @Data
 @Table(name = "USERS")
+@NoArgsConstructor
+@RequiredArgsConstructor
+@AllArgsConstructor
 public class User {
 	  @Id
 	  @GeneratedValue(strategy = GenerationType.IDENTITY)
