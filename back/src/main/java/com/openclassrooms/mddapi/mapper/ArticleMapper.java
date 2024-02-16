@@ -30,7 +30,6 @@ public abstract class ArticleMapper implements EntityMapper<ArticleDto, Article>
 	TopicService topicService;
 	
 	@Mappings({
-		@Mapping(target="comments", expression="java(Optional.ofNullable(articleDto.getComments()).orElseGet(Collections::emptySet).stream().map(commmentId -> { Comment comment = this.commentService.findById(commmentId); if (comment != null) { return comment; } return null; }).collect(Collectors.toSet()))"),
 		@Mapping(target="user", expression="java(articleDto.getUserId() != null ? this.userService.findById(articleDto.getUserId()): null)"),
 		@Mapping(target="topic", expression="java(articleDto.getTopicId() != null ? this.topicService.findById(articleDto.getTopicId()) : null)"),
 
@@ -38,7 +37,6 @@ public abstract class ArticleMapper implements EntityMapper<ArticleDto, Article>
 	public abstract Article toEntity(ArticleDto articleDto);
 	
 	@Mappings({
-		@Mapping(target="comments", expression="java(Optional.ofNullable(article.getComments()).orElseGet(Collections::emptySet).stream().map(u -> u.getId()).collect(Collectors.toSet()))"),
 		@Mapping(source="article.user.id", target="userId"),
 		@Mapping(source="article.topic.id", target="topicId"),
 

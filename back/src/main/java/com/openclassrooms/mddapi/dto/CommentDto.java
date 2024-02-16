@@ -21,6 +21,7 @@ public class CommentDto {
 	
 	@NotNull
 	private Long userId;
+	private String userName;
 	
 	@NotNull
 	private Long articleId;

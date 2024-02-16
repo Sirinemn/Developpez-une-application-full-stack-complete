@@ -27,7 +27,7 @@ import com.openclassrooms.mddapi.payload.request.LoginRequest;
 
 
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/api")
 public class UserController {
 	private final TokenProvider tokenProvider;
 	private final UserService userService;
@@ -43,7 +43,7 @@ public class UserController {
 		this.userMapper = userMapper;
 		this.authenticationManager = authenticationManager;
 	}
-	@GetMapping("/{id}")
+	@GetMapping("/user/{id}")
 	public ResponseEntity<UserDto> getUser(@PathVariable Long id) {
 		User user = userService.findById(id);
 		

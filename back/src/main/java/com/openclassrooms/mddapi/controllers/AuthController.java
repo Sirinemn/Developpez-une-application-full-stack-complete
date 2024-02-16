@@ -16,17 +16,17 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.openclassrooms.mddapi.exception.BadRequestException;
 import com.openclassrooms.mddapi.jwt.TokenProvider;
 import com.openclassrooms.mddapi.payload.request.RegisterRequest;
-import com.openclassrooms.mddapi.services.AuthService;
+import com.openclassrooms.mddapi.services.AuthRepositoryBaseService;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/api")
 public class AuthController {
-	private AuthService authService;
+	private AuthRepositoryBaseService authService;
 	private TokenProvider tokenProvider;
 	private AuthenticationManager authenticationManager;
 	private final String AUTHORIZATION_HEADER = "Authorization";
 
-	public AuthController(AuthService authService, TokenProvider tokenProvider,
+	public AuthController(AuthRepositoryBaseService authService, TokenProvider tokenProvider,
 			AuthenticationManager authenticationManager) {
 		this.authService = authService;
 		this.tokenProvider = tokenProvider;
@@ -34,9 +34,7 @@ public class AuthController {
 	}
 
 	@PostMapping("/register")
-	public ResponseEntity<JWTToken> register(
-			@RequestBody RegisterRequest register)
-			throws BadRequestException {
+	public ResponseEntity<JWTToken> register(@RequestBody RegisterRequest register)throws BadRequestException {
 		authService.save(register);
 		UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
 				register.getEmail(), register.getPassword());

@@ -17,7 +17,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
@@ -48,10 +47,6 @@ public class User {
 	  @Column(name = "last_name")
 	  private String lastName;
 
-	  @NonNull
-	  @Size(max = 20)
-	  @Column(name = "first_name")
-	  private String firstName;
 
 	  @NonNull
 	  @Size(max = 120)
@@ -66,31 +61,17 @@ public class User {
 	  private LocalDateTime updatedAt;
 	  
 	  @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-		@JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id", table="USERS"),
-		inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id", table="role"))
+		@JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"),
+		inverseJoinColumns = @JoinColumn(name = "role_id"))
 		private List<Role> roles;
 	  
-	  @ManyToMany(
-				mappedBy = "users",
-						cascade = { 
-								CascadeType.PERSIST, 
-								CascadeType.MERGE 
-								}
-				)
-	  private Set<Topic> topics;
+		@ManyToMany(fetch = FetchType.EAGER)
+	    @JoinTable(
+	            name = "SUBSCRIBE",
+	            joinColumns = @JoinColumn( name = "user_id" ),
+	            inverseJoinColumns = @JoinColumn( name = "topic_id" ) )
+	    private Set<Topic> topics ;
+		
 	  
-	  @OneToMany(
-				mappedBy = "user", 
-				cascade = CascadeType.ALL,
-				orphanRemoval = true
-				)
-	  private Set<Comment> comments;
-	  
-	  @OneToMany(
-				mappedBy = "user", 
-				cascade = CascadeType.ALL,
-				orphanRemoval = true
-				)
-	  private Set<Article> articles;
 	  
 }

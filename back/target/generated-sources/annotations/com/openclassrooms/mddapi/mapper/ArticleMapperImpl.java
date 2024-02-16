@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-02-15T15:38:05+0100",
+    date = "2024-02-16T11:27:59+0100",
     comments = "version: 1.5.1.Final, compiler: Eclipse JDT (IDE) 3.35.0.v20230814-2020, environment: Java 17.0.8.1 (Eclipse Adoptium)"
 )
 @Component
@@ -60,12 +60,9 @@ public class ArticleMapperImpl extends ArticleMapper {
 
         article.setContent( articleDto.getContent() );
         article.setCreatedAt( articleDto.getCreatedAt() );
-        article.setDate( articleDto.getDate() );
         article.setId( articleDto.getId() );
         article.setTitre( articleDto.getTitre() );
-        article.setUpdatedAt( articleDto.getUpdatedAt() );
 
-        article.setComments( Optional.ofNullable(articleDto.getComments()).orElseGet(Collections::emptySet).stream().map(commmentId -> { Comment comment = this.commentService.findById(commmentId); if (comment != null) { return comment; } return null; }).collect(Collectors.toSet()) );
         article.setUser( articleDto.getUserId() != null ? this.userService.findById(articleDto.getUserId()): null );
         article.setTopic( articleDto.getTopicId() != null ? this.topicService.findById(articleDto.getTopicId()) : null );
 
@@ -84,12 +81,8 @@ public class ArticleMapperImpl extends ArticleMapper {
         articleDto.topicId( articleTopicId( article ) );
         articleDto.content( article.getContent() );
         articleDto.createdAt( article.getCreatedAt() );
-        articleDto.date( article.getDate() );
         articleDto.id( article.getId() );
         articleDto.titre( article.getTitre() );
-        articleDto.updatedAt( article.getUpdatedAt() );
-
-        articleDto.comments( Optional.ofNullable(article.getComments()).orElseGet(Collections::emptySet).stream().map(u -> u.getId()).collect(Collectors.toSet()) );
 
         return articleDto.build();
     }
