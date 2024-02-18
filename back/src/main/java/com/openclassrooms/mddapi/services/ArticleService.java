@@ -1,5 +1,6 @@
 package com.openclassrooms.mddapi.services;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -20,6 +21,8 @@ public class ArticleService {
 	}
 	
 	public void saveArticle(Article article) {
+		LocalDateTime now = LocalDateTime.now();
+		article.setCreatedAt(now);
 		articleRepository.save(article);
 	}
 	public List<Article> findAll(){

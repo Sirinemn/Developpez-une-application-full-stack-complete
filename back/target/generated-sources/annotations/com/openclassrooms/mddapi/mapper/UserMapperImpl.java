@@ -13,36 +13,11 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-02-18T18:33:07+0100",
+    date = "2024-02-18T22:19:25+0100",
     comments = "version: 1.5.1.Final, compiler: Eclipse JDT (IDE) 3.35.0.v20230814-2020, environment: Java 17.0.8.1 (Eclipse Adoptium)"
 )
 @Component
 public class UserMapperImpl implements UserMapper {
-
-    @Override
-    public User toEntity(UserDto dto) {
-        if ( dto == null ) {
-            return null;
-        }
-
-        User user = new User();
-
-        user.setCreatedAt( dto.getCreatedAt() );
-        user.setEmail( dto.getEmail() );
-        user.setId( dto.getId() );
-        user.setLastName( dto.getLastName() );
-        List<Role> list = dto.getRoles();
-        if ( list != null ) {
-            user.setRoles( new ArrayList<Role>( list ) );
-        }
-        Set<Topic> set = dto.getTopics();
-        if ( set != null ) {
-            user.setTopics( new LinkedHashSet<Topic>( set ) );
-        }
-        user.setUpdatedAt( dto.getUpdatedAt() );
-
-        return user;
-    }
 
     @Override
     public UserDto toDto(User entity) {
@@ -70,20 +45,6 @@ public class UserMapperImpl implements UserMapper {
     }
 
     @Override
-    public List<User> toEntity(List<UserDto> dtoList) {
-        if ( dtoList == null ) {
-            return null;
-        }
-
-        List<User> list = new ArrayList<User>( dtoList.size() );
-        for ( UserDto userDto : dtoList ) {
-            list.add( toEntity( userDto ) );
-        }
-
-        return list;
-    }
-
-    @Override
     public List<UserDto> toDto(List<User> entityList) {
         if ( entityList == null ) {
             return null;
@@ -92,6 +53,45 @@ public class UserMapperImpl implements UserMapper {
         List<UserDto> list = new ArrayList<UserDto>( entityList.size() );
         for ( User user : entityList ) {
             list.add( toDto( user ) );
+        }
+
+        return list;
+    }
+
+    @Override
+    public User toEntity(UserDto dto) {
+        if ( dto == null ) {
+            return null;
+        }
+
+        User user = new User();
+
+        user.setCreatedAt( dto.getCreatedAt() );
+        user.setEmail( dto.getEmail() );
+        user.setId( dto.getId() );
+        user.setLastName( dto.getLastName() );
+        List<Role> list = dto.getRoles();
+        if ( list != null ) {
+            user.setRoles( new ArrayList<Role>( list ) );
+        }
+        Set<Topic> set = dto.getTopics();
+        if ( set != null ) {
+            user.setTopics( new LinkedHashSet<Topic>( set ) );
+        }
+        user.setUpdatedAt( dto.getUpdatedAt() );
+
+        return user;
+    }
+
+    @Override
+    public List<User> toEntity(List<UserDto> dtoList) {
+        if ( dtoList == null ) {
+            return null;
+        }
+
+        List<User> list = new ArrayList<User>( dtoList.size() );
+        for ( UserDto userDto : dtoList ) {
+            list.add( toEntity( userDto ) );
         }
 
         return list;

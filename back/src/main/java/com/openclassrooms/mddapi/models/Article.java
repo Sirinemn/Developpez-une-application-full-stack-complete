@@ -17,10 +17,8 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.Data;
 
 @Entity
-@Data
 @Table(name = "ARTICLES")
 public class Article {
 	    @Id
@@ -62,6 +60,58 @@ public class Article {
 				)
 		@JoinColumn(name="topic_id")
 		private Topic topic;
+
+		public String getTitre() {
+			return titre;
+		}
+
+		public void setTitre(String titre) {
+			this.titre = titre;
+		}
+
+		public String getContent() {
+			return content;
+		}
+
+		public void setContent(String content) {
+			this.content = content;
+		}
+
+		public LocalDateTime getUpdatedAt() {
+			return updatedAt;
+		}
+
+		public void setUpdatedAt(LocalDateTime updatedAt) {
+			this.updatedAt = updatedAt;
+		}
+
+		public User getUser() {
+			return user;
+		}
+
+		public void setUser(User user) {
+			this.user = user;
+		}
+
+		public Topic getTopic() {
+			return topic;
+		}
+
+		public void setTopic(Topic topic) {
+			this.topic = topic;
+		}
+
+		public Long getId() {
+			return id;
+		}
+
+		public LocalDateTime getCreatedAt() {
+			return createdAt;
+		}
+
+		public void setCreatedAt(LocalDateTime createdAt) {
+			this.createdAt = createdAt;
+		}
 		
 		
 

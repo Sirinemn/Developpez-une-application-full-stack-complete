@@ -1,40 +1,22 @@
 package com.openclassrooms.mddapi.mapper;
 
 import com.openclassrooms.mddapi.dto.ArticleDto;
+import com.openclassrooms.mddapi.enumeration.Topics;
 import com.openclassrooms.mddapi.models.Article;
-import com.openclassrooms.mddapi.models.Comment;
 import com.openclassrooms.mddapi.models.Topic;
 import com.openclassrooms.mddapi.models.User;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-02-18T18:33:07+0100",
+    date = "2024-02-18T22:36:47+0100",
     comments = "version: 1.5.1.Final, compiler: Eclipse JDT (IDE) 3.35.0.v20230814-2020, environment: Java 17.0.8.1 (Eclipse Adoptium)"
 )
 @Component
 public class ArticleMapperImpl extends ArticleMapper {
-
-    @Override
-    public List<Article> toEntity(List<ArticleDto> dtoList) {
-        if ( dtoList == null ) {
-            return null;
-        }
-
-        List<Article> list = new ArrayList<Article>( dtoList.size() );
-        for ( ArticleDto articleDto : dtoList ) {
-            list.add( toEntity( articleDto ) );
-        }
-
-        return list;
-    }
 
     @Override
     public List<ArticleDto> toDto(List<Article> entityList) {
@@ -51,6 +33,20 @@ public class ArticleMapperImpl extends ArticleMapper {
     }
 
     @Override
+    public List<Article> toEntity(List<ArticleDto> dtoList) {
+        if ( dtoList == null ) {
+            return null;
+        }
+
+        List<Article> list = new ArrayList<Article>( dtoList.size() );
+        for ( ArticleDto articleDto : dtoList ) {
+            list.add( toEntity( articleDto ) );
+        }
+
+        return list;
+    }
+
+    @Override
     public Article toEntity(ArticleDto articleDto) {
         if ( articleDto == null ) {
             return null;
@@ -60,7 +56,6 @@ public class ArticleMapperImpl extends ArticleMapper {
 
         article.setContent( articleDto.getContent() );
         article.setCreatedAt( articleDto.getCreatedAt() );
-        article.setId( articleDto.getId() );
         article.setTitre( articleDto.getTitre() );
 
         article.setUser( articleDto.getUserId() != null ? this.userService.findById(articleDto.getUserId()): null );
@@ -77,17 +72,38 @@ public class ArticleMapperImpl extends ArticleMapper {
 
         ArticleDto.ArticleDtoBuilder articleDto = ArticleDto.builder();
 
-        articleDto.userId( articleUserId( article ) );
+        Topics name = articleTopicName( article );
+        if ( name != null ) {
+            articleDto.topicName( name.name() );
+        }
+        articleDto.userName( articleUserLastName( article ) );
         articleDto.topicId( articleTopicId( article ) );
         articleDto.content( article.getContent() );
         articleDto.createdAt( article.getCreatedAt() );
         articleDto.id( article.getId() );
         articleDto.titre( article.getTitre() );
 
+        articleDto.userId( article.getUser().getId() );
+
         return articleDto.build();
     }
 
-    private Long articleUserId(Article article) {
+    private Topics articleTopicName(Article article) {
+        if ( article == null ) {
+            return null;
+        }
+        Topic topic = article.getTopic();
+        if ( topic == null ) {
+            return null;
+        }
+        Topics name = topic.getName();
+        if ( name == null ) {
+            return null;
+        }
+        return name;
+    }
+
+    private String articleUserLastName(Article article) {
         if ( article == null ) {
             return null;
         }
@@ -95,11 +111,11 @@ public class ArticleMapperImpl extends ArticleMapper {
         if ( user == null ) {
             return null;
         }
-        Long id = user.getId();
-        if ( id == null ) {
+        String lastName = user.getLastName();
+        if ( lastName == null ) {
             return null;
         }
-        return id;
+        return lastName;
     }
 
     private Long articleTopicId(Article article) {

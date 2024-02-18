@@ -8,10 +8,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.Data;
 
 @Entity
-@Data
 @Table(name = "TOPICS")
 public class Topic {
 	@Id
@@ -21,5 +19,19 @@ public class Topic {
 	
 	private Topics name;
 	
+	public Long getId() {
+		return id;
+	}
 
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Topics getName() {
+		return name;
+	}
+
+	public void setName(Topics name) {
+		this.name = name;
+	}
 }
