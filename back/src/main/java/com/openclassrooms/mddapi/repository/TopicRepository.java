@@ -7,5 +7,4 @@ import com.openclassrooms.mddapi.models.Topic;
 
 @Repository
 public interface TopicRepository extends JpaRepository<Topic, Long>{
-
 }

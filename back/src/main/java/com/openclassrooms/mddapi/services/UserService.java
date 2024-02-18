@@ -1,5 +1,7 @@
 package com.openclassrooms.mddapi.services;
 
+import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -8,8 +10,10 @@ import org.springframework.stereotype.Service;
 
 import com.openclassrooms.mddapi.exception.BadRequestException;
 import com.openclassrooms.mddapi.exception.NotFoundException;
+import com.openclassrooms.mddapi.models.Article;
 import com.openclassrooms.mddapi.models.Topic;
 import com.openclassrooms.mddapi.models.User;
+import com.openclassrooms.mddapi.repository.ArticleRepository;
 import com.openclassrooms.mddapi.repository.TopicRepository;
 import com.openclassrooms.mddapi.repository.UserRepository;
 
@@ -21,10 +25,12 @@ import jakarta.transaction.Transactional;
 public class UserService {
 	   private final UserRepository userRepository;
 	   private final TopicRepository topicRepository;
+	   private final ArticleRepository articleRepository;
 
-	    public UserService(UserRepository userRepository, TopicRepository topicRepository) {
+	    public UserService(UserRepository userRepository, TopicRepository topicRepository, ArticleRepository articleRepository) {
 	        this.userRepository = userRepository;
 	        this.topicRepository = topicRepository;
+	        this.articleRepository = articleRepository;
 	    }
 
 	    public void delete(Long id) {
@@ -33,6 +39,21 @@ public class UserService {
 
 	    public User findById(Long id) {
 	        return this.userRepository.findById(id).orElse(null);
+	    }
+	    public void updateUser(String lastName, String email, final Long id) {
+			LocalDateTime now = LocalDateTime.now();
+	    	User user = userRepository.findById(id).orElse(null);
+	    	user.setLastName(lastName);
+	    	user.setEmail(email);
+	    	user.setUpdatedAt(now);
+	    	userRepository.save(user);
+	    }
+	    public Set<Article> getArticles(Long id){
+	    	User user = userRepository.findById(id).orElse(null);
+	    	Set<Topic> topics = user.getTopics();
+	    	Set<Article> articles = new HashSet<>();
+	    	topics.forEach(topic-> articles.addAll(articleRepository.findByTopicId(topic.getId())) );
+			return articles;
 	    }
 	    public void subscribe(Long id, Long topicId) {
 	    	User user = userRepository.findById(id).orElse(null);

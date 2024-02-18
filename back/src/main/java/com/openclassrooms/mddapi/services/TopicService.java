@@ -2,7 +2,6 @@ package com.openclassrooms.mddapi.services;
 
 import java.util.List;
 
-
 import org.springframework.stereotype.Service;
 
 import com.openclassrooms.mddapi.models.Topic;
@@ -19,7 +18,7 @@ public class TopicService {
 	}
 	
 	public List<Topic> findAll(){
-		return topicRepository.findAll();
+		return  topicRepository.findAll();
 	}
 	public Topic findById(Long id) {
 		return topicRepository.findById(id).orElse(null);

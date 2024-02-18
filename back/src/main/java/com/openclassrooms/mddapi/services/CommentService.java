@@ -1,6 +1,8 @@
 package com.openclassrooms.mddapi.services;
 
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.openclassrooms.mddapi.models.Comment;
@@ -20,7 +22,7 @@ public class CommentService {
 	public void saveComment(Comment comment) {
 		commentRepository.save(comment);
 	}
-	public Comment findById(Long id) {
-		return commentRepository.findById(id).orElse(null);
+	public List<Comment> findByArticleId(Long articleId) {
+		return commentRepository.findByArticleId(articleId);
 	}
 }

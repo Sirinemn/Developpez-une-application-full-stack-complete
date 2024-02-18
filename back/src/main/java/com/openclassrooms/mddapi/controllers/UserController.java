@@ -1,85 +1,93 @@
 package com.openclassrooms.mddapi.controllers;
 
-import org.springframework.http.HttpHeaders;
+import java.util.HashSet;
+import java.util.Set;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.openclassrooms.mddapi.jwt.TokenProvider;
+import com.openclassrooms.mddapi.dto.ArticleDto;
+import com.openclassrooms.mddapi.dto.UserDto;
+import com.openclassrooms.mddapi.mapper.ArticleMapper;
 import com.openclassrooms.mddapi.mapper.UserMapper;
+import com.openclassrooms.mddapi.models.Article;
+import com.openclassrooms.mddapi.models.User;
+import com.openclassrooms.mddapi.payload.response.ArticleResponse;
+import com.openclassrooms.mddapi.payload.response.MessageResponse;
 import com.openclassrooms.mddapi.services.UserService;
 
-import jakarta.validation.Valid;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.openclassrooms.mddapi.dto.UserDto;
-import com.openclassrooms.mddapi.models.User;
-import com.openclassrooms.mddapi.payload.request.LoginRequest;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api")
 public class UserController {
-	private final TokenProvider tokenProvider;
 	private final UserService userService;
 	private final UserMapper userMapper;
-	private final String AUTHORIZATION_HEADER = "Authorization";
+	private final ArticleMapper articleMapper;
 
-	private final AuthenticationManager authenticationManager;
-
-	public UserController(UserMapper userMapper,TokenProvider tokenProvider, AuthenticationManager authenticationManager,
-			UserService userService) {
-		this.tokenProvider = tokenProvider;
+	public UserController(UserMapper userMapper,
+			UserService userService, ArticleMapper articleMapper) {
 		this.userService = userService;
 		this.userMapper = userMapper;
-		this.authenticationManager = authenticationManager;
+		this.articleMapper = articleMapper;
 	}
 	@GetMapping("/user/{id}")
-	public ResponseEntity<UserDto> getUser(@PathVariable Long id) {
-		User user = userService.findById(id);
+	public ResponseEntity<UserDto> getUser(@PathVariable String id) {
+		User user = userService.findById(Long.parseLong(id));
 		
 		return ResponseEntity.ok(this.userMapper.toDto(user));
 	}
-	@PostMapping("/login")
-	public ResponseEntity<JWTToken> authorize(@Valid @RequestBody LoginRequest login) {
-
-		UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-				login.getEmail(), login.getPassword());
-
-		Authentication authentication = this.authenticationManager.authenticate(authenticationToken);
-		SecurityContextHolder.getContext().setAuthentication(authentication);
-		String jwt = tokenProvider.createToken(authentication);
-		HttpHeaders httpHeaders = new HttpHeaders();
-		httpHeaders.add(AUTHORIZATION_HEADER, "Bearer " + jwt);
-		return new ResponseEntity<>(new JWTToken(jwt), httpHeaders, HttpStatus.OK);
+	@GetMapping("/user/{id}/topics")
+	public ResponseEntity<?> getSubscribedTopics(@PathVariable String id){
+		User user = userService.findById(Long.parseLong(id));
+		return ResponseEntity.ok(user.getTopics());
+		
 	}
-	
-	static class JWTToken {
+	@GetMapping("/user/{id}/articles")
+	public ResponseEntity<ArticleResponse> getSubscribedArticles(@PathVariable String id){
+		Set<Article> articles=userService.getArticles(Long.parseLong(id));
+		Set<ArticleDto> articlesDto = new HashSet<>();
+		articles.forEach(article-> articlesDto.add(articleMapper.toDto(article)));
+		ArticleResponse articleResponse = new ArticleResponse(articlesDto);
+		return new ResponseEntity<>(articleResponse, HttpStatus.OK);
+		
+	}
+	@PutMapping("/user/update/{id}")
+	public ResponseEntity<MessageResponse> updateUser(@RequestParam("lastName") @NotBlank @Size(max = 63) String lastName, @RequestParam("email") @NotBlank @Size(max = 63) String email, @PathVariable Long id){
+		userService.updateUser(lastName, email, id);
+		MessageResponse messageResponse = new MessageResponse("Updated with success!");
+		return new ResponseEntity<>(messageResponse, HttpStatus.OK);
+		
+	}
+	@PostMapping("{id}/subscribe/{topicId}")
+	public ResponseEntity<?> subscribe(@PathVariable("id") String id, @PathVariable("topicId") String topicId){
+		   try {
+	            this.userService.subscribe(Long.parseLong(id), Long.parseLong(topicId));
 
-		private String idToken;
+	            return ResponseEntity.ok().build();
+	        } catch (NumberFormatException e) {
+	            return ResponseEntity.badRequest().build();
+	        }	
+	}
+	@PostMapping("{id}/unsubscribe/{topicId}")
+	public ResponseEntity<?> unsubscribe(@PathVariable("id") String id, @PathVariable("topicId") String topicId){
+		   try {
+	            this.userService.unsubscribe(Long.parseLong(id), Long.parseLong(topicId));
 
-		public JWTToken(String idToken) {
-			this.idToken = idToken;
-		}
-
-		@JsonProperty("token")
-		String getIdToken() {
-			return idToken;
-		}
-
-		void setIdToken(String idToken) {
-			this.idToken = idToken;
-		}
+	            return ResponseEntity.ok().build();
+	        } catch (NumberFormatException e) {
+	            return ResponseEntity.badRequest().build();
+	        }	
 	}
 
 }
