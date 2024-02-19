@@ -76,7 +76,7 @@ public class UserService {
 	    		throw new NotFoundException();
 	    	}
 	    	boolean alreadySubscribe = user.getTopics().stream().anyMatch(o -> o.getId().equals(topic.getId()));
-	        if(alreadySubscribe) {
+	        if(!alreadySubscribe) {
 	            throw new BadRequestException();
 	        }
 	    	user.setTopics((Set<Topic>) user.getTopics().stream().filter(topics -> !topics.getId().equals(topicId)).collect(Collectors.toSet()));

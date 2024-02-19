@@ -27,7 +27,7 @@ public class AuthRepositoryBaseService implements AuthService{
 
 	@Override
 	public User save(RegisterRequest register) throws BadRequestException{
-		if (userRepository.findByLastName(register.getLastName())== null) {
+		if (userRepository.findByLastName(register.getLastName())!= null) {
 			throw new BadRequestException();
 		}
 		
