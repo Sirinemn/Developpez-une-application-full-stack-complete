@@ -1,7 +1,8 @@
 package com.openclassrooms.mddapi.services;
 
+import java.time.LocalDateTime;
 import java.util.List;
-
+import java.util.Set;
 
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,8 @@ public class ArticleService {
 	}
 	
 	public void saveArticle(Article article) {
+		LocalDateTime now = LocalDateTime.now();
+		article.setCreatedAt(now);
 		articleRepository.save(article);
 	}
 	public List<Article> findAll(){
@@ -30,7 +33,7 @@ public class ArticleService {
 		return articleRepository.findById(id).orElse(null);
 	}
 	
-	public List<Article> getArticlesByTopicId(Long topicId){
+	public Set<Article> getArticlesByTopicId(Long topicId){
 		return articleRepository.findByTopicId(topicId);
 		
 	}

@@ -1,40 +1,47 @@
 package com.openclassrooms.mddapi.mapper;
 
 import com.openclassrooms.mddapi.dto.UserDto;
-import com.openclassrooms.mddapi.models.Article;
-import com.openclassrooms.mddapi.models.Comment;
 import com.openclassrooms.mddapi.models.Role;
 import com.openclassrooms.mddapi.models.Topic;
 import com.openclassrooms.mddapi.models.User;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import java.util.Set;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-02-15T15:38:05+0100",
+    date = "2024-02-18T22:19:25+0100",
     comments = "version: 1.5.1.Final, compiler: Eclipse JDT (IDE) 3.35.0.v20230814-2020, environment: Java 17.0.8.1 (Eclipse Adoptium)"
 )
 @Component
-public class UserMapperImpl extends UserMapper {
+public class UserMapperImpl implements UserMapper {
 
     @Override
-    public List<User> toEntity(List<UserDto> dtoList) {
-        if ( dtoList == null ) {
+    public UserDto toDto(User entity) {
+        if ( entity == null ) {
             return null;
         }
 
-        List<User> list = new ArrayList<User>( dtoList.size() );
-        for ( UserDto userDto : dtoList ) {
-            list.add( toEntity( userDto ) );
-        }
+        UserDto.UserDtoBuilder userDto = UserDto.builder();
 
-        return list;
+        userDto.createdAt( entity.getCreatedAt() );
+        userDto.email( entity.getEmail() );
+        userDto.id( entity.getId() );
+        userDto.lastName( entity.getLastName() );
+        List<Role> list = entity.getRoles();
+        if ( list != null ) {
+            userDto.roles( new ArrayList<Role>( list ) );
+        }
+        Set<Topic> set = entity.getTopics();
+        if ( set != null ) {
+            userDto.topics( new LinkedHashSet<Topic>( set ) );
+        }
+        userDto.updatedAt( entity.getUpdatedAt() );
+
+        return userDto.build();
     }
 
     @Override
@@ -52,56 +59,41 @@ public class UserMapperImpl extends UserMapper {
     }
 
     @Override
-    public User toEntity(UserDto userDto) {
-        if ( userDto == null ) {
+    public User toEntity(UserDto dto) {
+        if ( dto == null ) {
             return null;
         }
 
-        String email = null;
-        String firstName = null;
-        String lastName = null;
-        String password = null;
+        User user = new User();
 
-        email = userDto.getEmail();
-        firstName = userDto.getFirstName();
-        lastName = userDto.getLastName();
-        password = userDto.getPassword();
-
-        User user = new User( email, lastName, firstName, password );
-
-        user.setCreatedAt( userDto.getCreatedAt() );
-        user.setId( userDto.getId() );
-        user.setUpdatedAt( userDto.getUpdatedAt() );
-
-        user.setComments( Optional.ofNullable(userDto.getComments()).orElseGet(Collections::emptySet).stream().map(commmentId -> { Comment comment = this.commentService.findById(commmentId); if (comment != null) { return comment; } return null; }).collect(Collectors.toSet()) );
-        user.setArticles( Optional.ofNullable(userDto.getArticles()).orElseGet(Collections::emptySet).stream().map(articleId -> { Article article = this.articleService.findById(articleId); if (article != null) { return article; } return null; }).collect(Collectors.toSet()) );
-        user.setRoles( Optional.ofNullable(userDto.getRoles()).orElseGet(Collections::emptyList).stream().map(roleId -> { Role role = this.roleServiceO.findById(roleId); if (role != null) { return role; } return null; }).collect(Collectors.toList()) );
-        user.setTopics( Optional.ofNullable(userDto.getTopics()).orElseGet(Collections::emptySet).stream().map(topicId -> { Topic topic = this.topicService.findById(topicId); if (topic != null) { return topic; } return null; }).collect(Collectors.toSet()) );
+        user.setCreatedAt( dto.getCreatedAt() );
+        user.setEmail( dto.getEmail() );
+        user.setId( dto.getId() );
+        user.setLastName( dto.getLastName() );
+        List<Role> list = dto.getRoles();
+        if ( list != null ) {
+            user.setRoles( new ArrayList<Role>( list ) );
+        }
+        Set<Topic> set = dto.getTopics();
+        if ( set != null ) {
+            user.setTopics( new LinkedHashSet<Topic>( set ) );
+        }
+        user.setUpdatedAt( dto.getUpdatedAt() );
 
         return user;
     }
 
     @Override
-    public UserDto toDto(User user) {
-        if ( user == null ) {
+    public List<User> toEntity(List<UserDto> dtoList) {
+        if ( dtoList == null ) {
             return null;
         }
 
-        UserDto.UserDtoBuilder userDto = UserDto.builder();
+        List<User> list = new ArrayList<User>( dtoList.size() );
+        for ( UserDto userDto : dtoList ) {
+            list.add( toEntity( userDto ) );
+        }
 
-        userDto.createdAt( user.getCreatedAt() );
-        userDto.email( user.getEmail() );
-        userDto.firstName( user.getFirstName() );
-        userDto.id( user.getId() );
-        userDto.lastName( user.getLastName() );
-        userDto.password( user.getPassword() );
-        userDto.updatedAt( user.getUpdatedAt() );
-
-        userDto.comments( Optional.ofNullable(user.getComments()).orElseGet(Collections::emptySet).stream().map(c -> c.getId()).collect(Collectors.toSet()) );
-        userDto.articles( Optional.ofNullable(user.getArticles()).orElseGet(Collections::emptySet).stream().map(a -> a.getId()).collect(Collectors.toSet()) );
-        userDto.roles( Optional.ofNullable(user.getRoles()).orElseGet(Collections::emptyList).stream().map(r -> r.getId()).collect(Collectors.toList()) );
-        userDto.topics( Optional.ofNullable(user.getTopics()).orElseGet(Collections::emptySet).stream().map(t -> t.getId()).collect(Collectors.toSet()) );
-
-        return userDto.build();
+        return list;
     }
 }

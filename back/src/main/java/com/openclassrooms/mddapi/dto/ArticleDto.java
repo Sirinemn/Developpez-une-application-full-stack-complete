@@ -1,8 +1,6 @@
 package com.openclassrooms.mddapi.dto;
 
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.Set;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -24,21 +22,18 @@ public class ArticleDto {
     private String titre;
 
     @NotNull
-    private Date date;
-
-    @NotNull
     @Size(max = 2500)
     private String content;
     
 	private LocalDateTime createdAt;
-
-	private LocalDateTime updatedAt;
 	
-    Set<Long> comments;
     @NotNull
     private Long topicId;
     
+    private String topicName;
+    
     @NotNull
     private Long userId;
+    private String userName;
 
 }

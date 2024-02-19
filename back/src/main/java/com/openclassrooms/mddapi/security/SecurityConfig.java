@@ -57,7 +57,7 @@ public class SecurityConfig {
 				.csrf((AbstractHttpConfigurer::disable));
 		http.sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 		http.securityMatcher("/api/**").authorizeHttpRequests(rmr -> rmr
-				.requestMatchers("/api/auth/login", "/api/auth/register").permitAll()
+				.requestMatchers("/api/login", "/api/register").permitAll()
 	            .requestMatchers("/api/**").authenticated()				
 				);
 		http.authenticationProvider(authenticationProvider())

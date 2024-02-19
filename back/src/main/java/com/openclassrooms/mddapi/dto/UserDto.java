@@ -4,6 +4,9 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
+import com.openclassrooms.mddapi.models.Role;
+import com.openclassrooms.mddapi.models.Topic;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -27,22 +30,10 @@ public class UserDto {
 	  @NonNull
 	  @Size(max = 20)
 	  private String lastName;
-
-	  @NonNull
-	  @Size(max = 20)
-	  private String firstName;
-
-	  @NonNull
-	  @Size(max = 120)
-	  private String password;
 	  
-	  Set<Long> topics;
+	  Set<Topic> topics;
 	  
-	  Set<Long> comments;
-
-	  Set<Long> articles;
-	  
-	  List<Long> roles;
+	  List<Role> roles;
 
 	  private LocalDateTime createdAt;
 
