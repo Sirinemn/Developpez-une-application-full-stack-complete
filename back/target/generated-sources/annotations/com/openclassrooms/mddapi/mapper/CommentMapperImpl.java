@@ -16,25 +16,11 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-02-19T10:23:14+0100",
+    date = "2024-02-20T13:07:48+0100",
     comments = "version: 1.5.1.Final, compiler: Eclipse JDT (IDE) 3.35.0.v20230814-2020, environment: Java 17.0.8.1 (Eclipse Adoptium)"
 )
 @Component
 public class CommentMapperImpl extends CommentMapper {
-
-    @Override
-    public List<CommentDto> toDto(List<Comment> entityList) {
-        if ( entityList == null ) {
-            return null;
-        }
-
-        List<CommentDto> list = new ArrayList<CommentDto>( entityList.size() );
-        for ( Comment comment : entityList ) {
-            list.add( toDto( comment ) );
-        }
-
-        return list;
-    }
 
     @Override
     public List<Comment> toEntity(List<CommentDto> dtoList) {
@@ -45,6 +31,20 @@ public class CommentMapperImpl extends CommentMapper {
         List<Comment> list = new ArrayList<Comment>( dtoList.size() );
         for ( CommentDto commentDto : dtoList ) {
             list.add( toEntity( commentDto ) );
+        }
+
+        return list;
+    }
+
+    @Override
+    public List<CommentDto> toDto(List<Comment> entityList) {
+        if ( entityList == null ) {
+            return null;
+        }
+
+        List<CommentDto> list = new ArrayList<CommentDto>( entityList.size() );
+        for ( Comment comment : entityList ) {
+            list.add( toDto( comment ) );
         }
 
         return list;
@@ -75,29 +75,12 @@ public class CommentMapperImpl extends CommentMapper {
 
         CommentDto.CommentDtoBuilder commentDto = CommentDto.builder();
 
-        commentDto.userName( commentUserLastName( comment ) );
         commentDto.userId( commentUserId( comment ) );
+        commentDto.articleId( commentArticleId( comment ) );
         commentDto.content( comment.getContent() );
         commentDto.id( comment.getId() );
 
-        commentDto.articleId( comment.getArticle().getId() );
-
         return commentDto.build();
-    }
-
-    private String commentUserLastName(Comment comment) {
-        if ( comment == null ) {
-            return null;
-        }
-        User user = comment.getUser();
-        if ( user == null ) {
-            return null;
-        }
-        String lastName = user.getLastName();
-        if ( lastName == null ) {
-            return null;
-        }
-        return lastName;
     }
 
     private Long commentUserId(Comment comment) {
@@ -109,6 +92,21 @@ public class CommentMapperImpl extends CommentMapper {
             return null;
         }
         Long id = user.getId();
+        if ( id == null ) {
+            return null;
+        }
+        return id;
+    }
+
+    private Long commentArticleId(Comment comment) {
+        if ( comment == null ) {
+            return null;
+        }
+        Article article = comment.getArticle();
+        if ( article == null ) {
+            return null;
+        }
+        Long id = article.getId();
         if ( id == null ) {
             return null;
         }
