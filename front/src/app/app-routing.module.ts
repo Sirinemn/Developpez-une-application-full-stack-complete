@@ -12,12 +12,18 @@ const routes: Routes = [{ path: '', component: HomeComponent },
 {
   path: '',
   canActivate: [UnauthGuard],
+
   loadChildren: () => import('./features/auth/auth.module').then(m => m.AuthModule)
 },
 {
   path: 'me',
   canActivate: [AuthGuard],
   component: MeComponent
+},
+{
+  path: 'articles',
+  canActivate: [AuthGuard],
+  loadChildren: () => import('./features/articles/articles.module').then(m => m.ArticlesModule)
 },
 { path: '404', component: NotFoundComponent },
   { path: '**', redirectTo: '404' }

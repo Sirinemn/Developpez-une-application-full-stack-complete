@@ -26,7 +26,7 @@ const materialModule = [
   MatToolbarModule,
 ];
 @NgModule({
-  declarations: [AppComponent, HomeComponent, MeComponent, NotFoundComponent, ListComponent, DetailComponent, FormComponent],
+  declarations: [AppComponent, HomeComponent, MeComponent, NotFoundComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

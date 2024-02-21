@@ -1,22 +1,26 @@
+<mat-icon>keyboard_backspace</mat-icon>
 <div class="register" fxLayout="row" fxLayoutAlign="center center">
     <mat-card>
         <mat-card-header fxLayoutAlign="center center">
-            <mat-card-title>Register</mat-card-title>
+            <mat-card-title>Inscription</mat-card-title>
         </mat-card-header>
         <form class="register-form" [formGroup]="form" (ngSubmit)="submit()">
             <mat-card-content fxLayout="column">
-                <mat-form-field fxFlex>
-                    <input matInput placeholder="Last name" formControlName="lastName">
+                <mat-form-field >
+                    <label>Nom d'utilisateur</label>
+                    <input formControlName="lastName" class="nom">
                 </mat-form-field>
-                <mat-form-field fxFlex>
-                    <input matInput placeholder="Email" formControlName="email">
+                <mat-form-field>
+                    <label>Adresse e-mail</label>
+                    <input formControlName="email" class="mail">
                 </mat-form-field>
-                <mat-form-field fxFlex>
-                    <input matInput placeholder="Password" formControlName="password">
+                <mat-form-field >
+                    <label>Mot de passe</label>
+                    <input formControlName="password" class="pswd">
                 </mat-form-field>
             </mat-card-content>
-            <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Submit</button>
-            <span *ngIf="onError" class="error ml2">An error occurred</span>
         </form>
+        <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">S'inscrire</button>
+        <span *ngIf="onError" class="error ml2">An error occurred</span>
     </mat-card>
 </div>
