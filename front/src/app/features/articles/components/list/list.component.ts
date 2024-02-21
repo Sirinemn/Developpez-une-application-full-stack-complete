@@ -15,7 +15,7 @@ export class ListComponent {
 
 
   constructor(private sessionService:SessionService,
-    private articleApiService: ArticleApiService,
+    private articleApiService: ArticleApiService
     ) { this.userId=this.sessionService.sessionInformation!.id.toString()}
 
     public articles$: Observable<Article[]> = this.articleApiService.allByUser(this.userId);
