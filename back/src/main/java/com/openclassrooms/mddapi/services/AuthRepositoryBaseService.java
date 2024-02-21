@@ -1,5 +1,6 @@
 package com.openclassrooms.mddapi.services;
 
+import java.time.LocalDateTime;
 import java.util.Collections;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -27,7 +28,8 @@ public class AuthRepositoryBaseService implements AuthService{
 
 	@Override
 	public User save(RegisterRequest register) throws BadRequestException{
-		if (userRepository.findByLastName(register.getLastName())!= null) {
+		LocalDateTime now = LocalDateTime.now();
+		if (userRepository.existsByLastName(register.getLastName())) {
 			throw new BadRequestException();
 		}
 		
@@ -35,7 +37,7 @@ public class AuthRepositoryBaseService implements AuthService{
 		user.setLastName(register.getLastName());
 		user.setEmail(register.getEmail());
 		user.setPassword(passwordEncoder.encode(register.getPassword()));
-
+		user.setCreatedAt(now);
 		roleRepository.findByName("USER")
 		.ifPresent(r -> user.setRoles(Collections.singletonList(r)));
 		User saved=userRepository.save(user);

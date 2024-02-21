@@ -40,6 +40,9 @@ public class UserService {
 	    public User findById(Long id) {
 	        return this.userRepository.findById(id).orElse(null);
 	    }
+	    public User findByEmail(String email) {
+	    	return this.userRepository.findByEmail(email).orElse(null);
+	    }
 	    public void updateUser(String lastName, String email, final Long id) {
 			LocalDateTime now = LocalDateTime.now();
 	    	User user = userRepository.findById(id).orElse(null);

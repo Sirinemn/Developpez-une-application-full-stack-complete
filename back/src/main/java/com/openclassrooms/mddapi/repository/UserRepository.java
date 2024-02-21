@@ -10,6 +10,6 @@ import com.openclassrooms.mddapi.models.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long>{
 	Optional<User> findByEmail(String email);
-	Optional<User> findByLastName(String lastName);
+	Boolean existsByLastName(String name);
 
 }
