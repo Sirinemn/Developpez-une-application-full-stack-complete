@@ -1,7 +1,6 @@
 package com.openclassrooms.mddapi.mapper;
 
 import com.openclassrooms.mddapi.dto.UserDto;
-import com.openclassrooms.mddapi.models.Role;
 import com.openclassrooms.mddapi.models.Topic;
 import com.openclassrooms.mddapi.models.User;
 import java.util.ArrayList;
@@ -13,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-02-20T15:44:40+0100",
+    date = "2024-02-22T19:46:51+0100",
     comments = "version: 1.5.1.Final, compiler: Eclipse JDT (IDE) 3.35.0.v20230814-2020, environment: Java 17.0.8.1 (Eclipse Adoptium)"
 )
 @Component
@@ -28,12 +27,8 @@ public class UserMapperImpl implements UserMapper {
         User user = new User();
 
         user.setEmail( dto.getEmail() );
-        user.setLastName( dto.getLastName() );
+        user.setName( dto.getName() );
         user.setUpdatedAt( dto.getUpdatedAt() );
-        List<Role> list = dto.getRoles();
-        if ( list != null ) {
-            user.setRoles( new ArrayList<Role>( list ) );
-        }
         Set<Topic> set = dto.getTopics();
         if ( set != null ) {
             user.setTopics( new LinkedHashSet<Topic>( set ) );
@@ -55,11 +50,7 @@ public class UserMapperImpl implements UserMapper {
         userDto.createdAt( entity.getCreatedAt() );
         userDto.email( entity.getEmail() );
         userDto.id( entity.getId() );
-        userDto.lastName( entity.getLastName() );
-        List<Role> list = entity.getRoles();
-        if ( list != null ) {
-            userDto.roles( new ArrayList<Role>( list ) );
-        }
+        userDto.name( entity.getName() );
         Set<Topic> set = entity.getTopics();
         if ( set != null ) {
             userDto.topics( new LinkedHashSet<Topic>( set ) );

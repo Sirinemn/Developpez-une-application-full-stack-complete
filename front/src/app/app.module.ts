@@ -14,14 +14,14 @@ import { HomeComponent } from './pages/home/home.component';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { MeComponent } from './components/me/me.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
-import { ListComponent } from './features/articles/components/list/list.component';
-import { DetailComponent } from './features/articles/components/detail/detail.component';
-import { FormComponent } from './features/articles/components/form/form.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+
 
 const materialModule = [
   MatButtonModule,
   MatCardModule,
   MatIconModule,
+  MatFormFieldModule,
   MatSnackBarModule,
   MatToolbarModule,
 ];

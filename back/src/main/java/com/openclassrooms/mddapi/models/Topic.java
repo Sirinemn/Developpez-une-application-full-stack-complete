@@ -19,16 +19,24 @@ public class Topic {
 	
 	private Topics name;
 	
+	private String description;
+	
 	public Long getId() {
 		return id;
 	}
 
+	public void setDescription(String description) {
+		this.description = description;
+	}
 	public void setId(Long id) {
 		this.id = id;
 	}
 
 	public Topics getName() {
 		return name;
+	}
+	public String getDescription() {
+		return description;
 	}
 
 	public void setName(Topics name) {

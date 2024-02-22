@@ -1,10 +1,8 @@
 package com.openclassrooms.mddapi.dto;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Set;
 
-import com.openclassrooms.mddapi.models.Role;
 import com.openclassrooms.mddapi.models.Topic;
 
 import jakarta.validation.constraints.Email;
@@ -29,12 +27,10 @@ public class UserDto {
 
 	  @NonNull
 	  @Size(max = 20)
-	  private String lastName;
+	  private String name;
 	  
 	  Set<Topic> topics;
 	  
-	  List<Role> roles;
-
 	  private LocalDateTime createdAt;
 
 	  private LocalDateTime updatedAt;

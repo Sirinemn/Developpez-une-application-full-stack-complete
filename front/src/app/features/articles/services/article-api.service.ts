@@ -12,7 +12,7 @@ export class ArticleApiService {
 
   constructor(private httpClient: HttpClient) { }
   public allByUser(id: string): Observable<Article[]>{
-    return this.httpClient.get<Article[]>(`/user/${id}/articles`)
+    return this.httpClient.get<Article[]>(`${this.pathService}/user/${id}/articles`)
 
   }
 }

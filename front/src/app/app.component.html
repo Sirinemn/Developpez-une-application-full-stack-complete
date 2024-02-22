@@ -1,1 +1,10 @@
+<mat-toolbar fxLayout="row" fxLayoutAlign="space-between center">
+    <img src="/assets/logo_p6.png" alt="logo" class="img"/>
+    <div *ngIf="$isLogged() | async">
+        <span routerLink="rentals" class="link">Articles</span>
+        <span routerLink="me" class="link">Thèmes</span>
+        <mat-icon>account_circle</mat-icon>
+      </div>
+</mat-toolbar>
+<hr>
 <router-outlet></router-outlet>

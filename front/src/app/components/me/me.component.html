@@ -5,21 +5,62 @@
           <button mat-icon-button (click)="back()">
             <mat-icon>arrow_back</mat-icon>
           </button>
-          <h1>User information</h1>
+          <h1>Profil Utilisateur</h1>
         </div>
       </mat-card-title>
       <mat-card-content>
-        <div *ngIf="user" fxLayout="column" fxLayoutAlign="start center">
-          <p>Name: {{ user.lastName }} {{ user.lastName | uppercase }}</p>
-          <p>Email: {{ user.email }}</p>
-        
-          <div fxLayoutAlign="space-between center" class="p2 w100">
-  
-            <p><i>Create at: </i> {{ user.createdAt | date: 'longDate'}}</p>
-            <p><i>Last update: </i> {{ user.updatedAt| date: 'longDate'}}</p>
-          </div>
-        </div>
+      <form class="me-form"  (ngSubmit)="submit()">
+      <div *ngIf="user" fxLayout="column" fxLayoutAlign="start center"></div>
+      <mat-form-field >
+        <label>Email d'utilisateur</label>
+                    <input matInput  formControlName="email" class="mail" >
+      </mat-form-field>
+      <mat-form-field >
+        <label>Nom d'utilisateur</label>
+                    <input matInput  formControlName="name" class="name" >
+      </mat-form-field>
+      <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Sauvegarder</button>
+      </form>
         </mat-card-content>
+        <mat-card-content>
+          <div>
+            <button (click)="logout()" mat-button>Se déconnecter</button>
+          </div>
+      </mat-card-content>
     </mat-card>
   </div>
+  <hr>
+  <h1>Abonnements</h1>
+  <div class="topics">
+    <mat-card>
+      <mat-card-header fxLayout="row" fxLayoutAlign="space-between center">
+        <mat-card-title class="m0"></mat-card-title>
+       
+      </mat-card-header>
+      <div class="items mt2" fxLayout="row wrap" fxLayout.lt-md="column">
+        <mat-card class="item" *ngFor="let topic of topics$ | async" fxFlex>
+          <mat-card-header>
+            <mat-card-title>{{ topic.name }}</mat-card-title>
+          </mat-card-header>
+       
+          <mat-card-content>
+            <p>
+              {{ topic.description }}
+            </p>
+          </mat-card-content>
+          <mat-card-actions>
+            <button id="unsubscribe"
+              mat-raised-button
+              color="primary"
+              [routerLink]="['unsubscribe', topic.id]"
+            >
+              <mat-icon>search</mat-icon>
+              <span class="ml1">Se désabonner</span>
+            </button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </mat-card>
+  </div>
+
   

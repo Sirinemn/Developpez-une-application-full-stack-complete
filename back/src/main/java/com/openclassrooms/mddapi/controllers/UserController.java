@@ -5,6 +5,7 @@ import java.util.Set;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.openclassrooms.mddapi.dto.ArticleDto;
@@ -41,6 +43,13 @@ public class UserController {
 		this.userMapper = userMapper;
 		this.articleMapper = articleMapper;
 	}
+	@GetMapping("/me")
+	@ResponseBody
+	public ResponseEntity<UserDto> currentUserName(Authentication authentication) {
+		String name = authentication.getName();
+		User user = userService.getUserByName(name);
+		return ResponseEntity.ok(this.userMapper.toDto(user));
+	}
 	@GetMapping("/user/{id}")
 	public ResponseEntity<UserDto> getUser(@PathVariable String id) {
 		User user = userService.findById(Long.parseLong(id));
@@ -63,8 +72,8 @@ public class UserController {
 		
 	}
 	@PutMapping("/user/update/{id}")
-	public ResponseEntity<MessageResponse> updateUser(@RequestParam("lastName") @NotBlank @Size(max = 63) String lastName, @RequestParam("email") @NotBlank @Size(max = 63) String email, @PathVariable Long id){
-		userService.updateUser(lastName, email, id);
+	public ResponseEntity<MessageResponse> updateUser(@RequestParam("name") @NotBlank @Size(max = 63) String name, @RequestParam("email") @NotBlank @Size(max = 63) String email, @PathVariable Long id){
+		userService.updateUser(name, email, id);
 		MessageResponse messageResponse = new MessageResponse("Updated with success!");
 		return new ResponseEntity<>(messageResponse, HttpStatus.OK);
 		

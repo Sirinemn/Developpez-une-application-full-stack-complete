@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-02-20T15:44:40+0100",
+    date = "2024-02-22T19:46:50+0100",
     comments = "version: 1.5.1.Final, compiler: Eclipse JDT (IDE) 3.35.0.v20230814-2020, environment: Java 17.0.8.1 (Eclipse Adoptium)"
 )
 @Component
@@ -75,7 +75,7 @@ public class CommentMapperImpl extends CommentMapper {
 
         CommentDto.CommentDtoBuilder commentDto = CommentDto.builder();
 
-        commentDto.userName( commentUserLastName( comment ) );
+        commentDto.userName( commentUserName( comment ) );
         commentDto.userId( commentUserId( comment ) );
         commentDto.content( comment.getContent() );
         commentDto.id( comment.getId() );
@@ -85,7 +85,7 @@ public class CommentMapperImpl extends CommentMapper {
         return commentDto.build();
     }
 
-    private String commentUserLastName(Comment comment) {
+    private String commentUserName(Comment comment) {
         if ( comment == null ) {
             return null;
         }
@@ -93,11 +93,11 @@ public class CommentMapperImpl extends CommentMapper {
         if ( user == null ) {
             return null;
         }
-        String lastName = user.getLastName();
-        if ( lastName == null ) {
+        String name = user.getName();
+        if ( name == null ) {
             return null;
         }
-        return lastName;
+        return name;
     }
 
     private Long commentUserId(Comment comment) {

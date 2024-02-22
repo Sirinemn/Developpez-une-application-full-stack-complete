@@ -42,8 +42,8 @@ public class User {
 
 	  @NonNull
 	  @Size(max = 20)
-	  @Column(name = "last_name")
-	  private String lastName;
+	  @Column(name = "name")
+	  private String name;
 
 
 	  @NonNull
@@ -78,12 +78,12 @@ public class User {
 			this.email = email;
 		}
 
-		public String getLastName() {
-			return lastName;
+		public String getName() {
+			return name;
 		}
 
-		public void setLastName(String lastName) {
-			this.lastName = lastName;
+		public void setName(String lastName) {
+			this.name = lastName;
 		}
 
 		public String getPassword() {

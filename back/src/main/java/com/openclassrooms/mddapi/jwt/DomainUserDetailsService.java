@@ -25,7 +25,7 @@ public class DomainUserDetailsService implements UserDetailsService{
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 		com.openclassrooms.mddapi.models.User user = userRepository.findByEmail(email)
 				.orElseThrow(() -> new UsernameNotFoundException("not found"));
-		return new org.springframework.security.core.userdetails.User(user.getLastName(), user.getPassword(),
+		return new org.springframework.security.core.userdetails.User(user.getName(), user.getPassword(),
 				mapRolesToAuthorities(user.getRoles()));
 	}
 

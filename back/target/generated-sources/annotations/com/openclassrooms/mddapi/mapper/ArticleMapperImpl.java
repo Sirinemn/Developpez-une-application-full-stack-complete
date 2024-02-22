@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-02-20T15:44:40+0100",
+    date = "2024-02-22T19:46:51+0100",
     comments = "version: 1.5.1.Final, compiler: Eclipse JDT (IDE) 3.35.0.v20230814-2020, environment: Java 17.0.8.1 (Eclipse Adoptium)"
 )
 @Component
@@ -76,7 +76,7 @@ public class ArticleMapperImpl extends ArticleMapper {
         if ( name != null ) {
             articleDto.topicName( name.name() );
         }
-        articleDto.userName( articleUserLastName( article ) );
+        articleDto.userName( articleUserName( article ) );
         articleDto.topicId( articleTopicId( article ) );
         articleDto.content( article.getContent() );
         articleDto.createdAt( article.getCreatedAt() );
@@ -103,7 +103,7 @@ public class ArticleMapperImpl extends ArticleMapper {
         return name;
     }
 
-    private String articleUserLastName(Article article) {
+    private String articleUserName(Article article) {
         if ( article == null ) {
             return null;
         }
@@ -111,11 +111,11 @@ public class ArticleMapperImpl extends ArticleMapper {
         if ( user == null ) {
             return null;
         }
-        String lastName = user.getLastName();
-        if ( lastName == null ) {
+        String name = user.getName();
+        if ( name == null ) {
             return null;
         }
-        return lastName;
+        return name;
     }
 
     private Long articleTopicId(Article article) {

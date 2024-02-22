@@ -55,9 +55,7 @@ public class AuthController {
 		User user = this.userService.findByEmail(login.getEmail());
         return ResponseEntity.ok(new JwtResponse(jwt,
         		user.getId(),
-        		user.getLastName()
+        		user.getName()
                 ));
 	}
-	
-
 }
