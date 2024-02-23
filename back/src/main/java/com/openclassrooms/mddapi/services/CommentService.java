@@ -20,7 +20,7 @@ public class CommentService {
 	}
 	
 	public void saveComment(Comment comment) {
-		commentRepository.save(comment);
+		 commentRepository.save(comment);
 	}
 	public List<Comment> findByArticleId(Long articleId) {
 		return commentRepository.findByArticleId(articleId);

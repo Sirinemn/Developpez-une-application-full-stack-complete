@@ -31,8 +31,8 @@ export class LoginComponent {
     const loginRequest = this.form.value as LoginRequest;
     this.authService.login(loginRequest).subscribe(
       (response: SessionInformation) => {
-        console.log(response);
         localStorage.setItem('token', response.token);
+        localStorage.setItem('userID', response.id.toString());
         this.authService.me().subscribe((user: User) => {
           this.sessionService.logIn(user);
           this.router.navigate(['/articles'])

@@ -6,11 +6,11 @@
           routerLink="create"
         >
           <mat-icon>add</mat-icon>
-          <span class="ml1" id="create">Ajouter un <article></article></span>
+          <span class="ml1" id="create">Ajouter un article</span>
         </button>
       </mat-card-header>
       <div class="items mt2" fxLayout="row wrap" fxLayout.lt-md="column">
-        <mat-card class="item" *ngFor="let article of articles$ | async" fxFlex>
+        <mat-card class="item" *ngFor="let article of (articles$ | async)?.articles" fxFlex>
           <mat-card-header>
             <mat-card-title>{{ article.titre }}</mat-card-title>
           </mat-card-header>

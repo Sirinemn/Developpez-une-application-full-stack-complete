@@ -11,7 +11,7 @@ import lombok.RequiredArgsConstructor;
 @Data
 @RequiredArgsConstructor
 @AllArgsConstructor
-public class CommentResponse {
+public class CommentsResponse {
 	List<CommentDto> comments;
 
 }

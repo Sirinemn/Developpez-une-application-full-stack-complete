@@ -1,1 +1,49 @@
-<p>detail works!</p>
+<div class="detail">
+    <mat-card *ngIf="article">
+        <mat-card-title>
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+                <div fxLayout="row" fxLayoutAlign="start center">
+                    <button mat-icon-button (click)="back()">
+                        <mat-icon>arrow_back</mat-icon>
+                    </button>
+                    <h1>{{article.titre| titlecase}}</h1>
+                </div>
+            </div>
+            <div class="auteur"><i>Auteur: </i> {{ article.userName}}</div>
+            <div class="theme"><i>Thème: </i> {{ article.topicName}}</div>
+
+        </mat-card-title>
+        <mat-card-content>
+            <div class="content">
+                <p>Description:</p>
+                {{ article.content }}
+            </div>
+            <div class="date" class="my2" fxLayout="row" fxLayoutAlign="space-between center">
+                <div class="created"><i>Create at: </i> {{ article.createdAt| date: 'longDate'}}</div>
+                <div class="updated"><i>Last update: </i> {{ article.updatedAt| date: 'longDate'}}</div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+
+    <mat-card class="mt2">
+        <mat-card-title>
+            <h2>Commentaires</h2>
+        </mat-card-title>
+    <div class="items mt2" fxLayout="row" fxLayout.lt-md="column">
+        <mat-card class="item" *ngFor="let comment of (comments$ | async)?.comments" fxFlex>
+            <mat-card-content>
+                <p>
+                    {{ comment }}
+                </p>
+            </mat-card-content>
+        <mat-card-content>
+            <form [formGroup]="commentForm" (ngSubmit)="addComment()" fxLayout="column">
+                <textarea matInput placeholder="Laisser ici un commentaire" rows="6" formControlName="comment"></textarea>
+                <div fxLayout="row" fxLayoutAlign="end center" class="mt2">
+                    <button mat-raised-button color="primary" type="submit"
+                        [disabled]="commentForm.invalid">Send</button>
+                </div>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>
