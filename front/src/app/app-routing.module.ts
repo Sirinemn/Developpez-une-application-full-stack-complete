@@ -5,6 +5,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { MeComponent } from './components/me/me.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { UnauthGuard } from './guards/unauth.guard';
+import { ListComponent } from './features/topics/list/list.component';
 
 // consider a guard combined with canLoad / canActivate route option
 // to manage unauthenticated user to access private routes
@@ -24,6 +25,11 @@ const routes: Routes = [{ path: '', component: HomeComponent },
   path: 'articles',
   canActivate: [AuthGuard],
   loadChildren: () => import('./features/articles/articles.module').then(m => m.ArticlesModule)
+},
+{
+  path: 'topics',
+  canActivate: [AuthGuard],
+  component: ListComponent
 },
 { path: '404', component: NotFoundComponent },
   { path: '**', redirectTo: '404' }

@@ -7,8 +7,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommentResponse } from '../../interfaces/api/commentResponse.interface';
 import { CommentRequest } from '../../interfaces/api/commentRequest.interface';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { CommentsResponse } from '../../interfaces/api/commentsResponse.interface';
 
 @Component({
   selector: 'app-detail',
@@ -21,7 +19,7 @@ export class DetailComponent implements OnInit {
 
   public userId: string;
   public commentForm!: FormGroup;
-  public  comments$!: Observable<CommentsResponse>;
+  public  comments$ = this.commentService.allcomments(this.articleId);
   
   constructor( private route: ActivatedRoute, private articleApiService: ArticleApiService, private commentService: CommentsServiceService,
     private matSnackBar: MatSnackBar, private fb: FormBuilder) {
@@ -30,7 +28,6 @@ export class DetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.articleApiService.detail(this.articleId).subscribe((article: Article)=>this.article = article)
-    this.comments$ = this.commentService.allcomments(this.articleId);
   }
   public back() {
     window.history.back();

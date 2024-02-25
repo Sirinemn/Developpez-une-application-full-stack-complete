@@ -9,18 +9,7 @@
         </div>
       </mat-card-title>
       <mat-card-content>
-      <form class="me-form"  (ngSubmit)="submit()">
-      <div *ngIf="user" fxLayout="column" fxLayoutAlign="start center"></div>
-      <mat-form-field >
-        <label>Email d'utilisateur</label>
-                    <input matInput  formControlName="email" class="mail" >
-      </mat-form-field>
-      <mat-form-field >
-        <label>Nom d'utilisateur</label>
-                    <input matInput  formControlName="name" class="name" >
-      </mat-form-field>
-      <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Sauvegarder</button>
-      </form>
+    
         </mat-card-content>
         <mat-card-content>
           <div>
@@ -52,9 +41,7 @@
             <button id="unsubscribe"
               mat-raised-button
               color="primary"
-              [routerLink]="['unsubscribe', topic.id]"
-            >
-              <mat-icon>search</mat-icon>
+              (click)="unsubscribe(topic.id)">
               <span class="ml1">Se désabonner</span>
             </button>
           </mat-card-actions>

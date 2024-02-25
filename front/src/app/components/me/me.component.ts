@@ -8,7 +8,8 @@ import { AuthService } from 'src/app/features/auth/services/auth.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { Topic } from 'src/app/interfaces/topic.interface';
-
+import { Subscribtion } from 'src/app/interfaces/api/subscribtion.interface';
+import { MessageResponse } from 'src/app/interfaces/api/messageResponse.interface';
 @Component({
   selector: 'app-me',
   templateUrl: './me.component.html',
@@ -16,19 +17,15 @@ import { Topic } from 'src/app/interfaces/topic.interface';
 })
 export class MeComponent implements OnInit {
 
-
   public user!: User ;
-  private userId=this.user?.id;
+  private userId= localStorage.getItem('userID')!;
   topics$: Observable<Topic[]> = this.userService.getTopics(this.userId?.toString());
 
 
-  constructor(private fb: FormBuilder,private authService: AuthService,private router: Router,
+  constructor(private fb: FormBuilder,private authService: AuthService,private router: Router,private matSnackBar: MatSnackBar,
      private sessionService: SessionService, private userService: UserService) { }
 
-  public form = this.fb.group({
-    email: ['', [Validators.required, Validators.email]],
-    name: ['', [Validators.required, Validators.name]],
-  });
+
   public ngOnInit(): void {
     this.authService.me().subscribe(
       (user: User) => this.user = user
@@ -44,4 +41,13 @@ export class MeComponent implements OnInit {
   submit() {
     throw new Error('Method not implemented.');
     }
+    unsubscribe(topicId: number) {
+      const subscribtion = {
+        userId: this.userId,
+        topicId: topicId.toString()
+      } as Subscribtion;
+      this.userService.unsbscribe(subscribtion).subscribe((commentResponse: MessageResponse)=>
+      {this.matSnackBar.open(commentResponse.message, "Close", { duration: 3000});
+    });
+      }
 }

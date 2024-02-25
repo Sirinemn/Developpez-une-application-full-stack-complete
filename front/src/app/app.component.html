@@ -1,9 +1,9 @@
 <mat-toolbar fxLayout="row" fxLayoutAlign="space-between center" *ngIf="$isLogged() | async">
     <img src="/assets/logo_p6.png" alt="logo" class="img"/>
     <div >
-        <span routerLink="rentals" class="link">Articles</span>
-        <span routerLink="me" class="link">Thèmes</span>
-        <mat-icon>account_circle</mat-icon>
+        <span routerLink="articles" class="link">Articles</span>
+        <span routerLink="topics" class="link">Thèmes</span>
+        <mat-icon routerLink="me" >account_circle</mat-icon>
       </div>
       <hr>
 </mat-toolbar>

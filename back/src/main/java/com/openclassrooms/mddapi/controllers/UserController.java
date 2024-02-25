@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -22,6 +23,7 @@ import com.openclassrooms.mddapi.mapper.ArticleMapper;
 import com.openclassrooms.mddapi.mapper.UserMapper;
 import com.openclassrooms.mddapi.models.Article;
 import com.openclassrooms.mddapi.models.User;
+import com.openclassrooms.mddapi.payload.request.SubscribtionRequest;
 import com.openclassrooms.mddapi.payload.response.ArticleResponse;
 import com.openclassrooms.mddapi.payload.response.MessageResponse;
 import com.openclassrooms.mddapi.services.UserService;
@@ -78,22 +80,22 @@ public class UserController {
 		return new ResponseEntity<>(messageResponse, HttpStatus.OK);
 		
 	}
-	@PostMapping("{id}/subscribe/{topicId}")
-	public ResponseEntity<?> subscribe(@PathVariable("id") String id, @PathVariable("topicId") String topicId){
+	@PostMapping("/user/{id}/subscribe/{topicId}")
+	public ResponseEntity<MessageResponse> subscribe(@RequestBody SubscribtionRequest subscribtion){
 		   try {
-	            this.userService.subscribe(Long.parseLong(id), Long.parseLong(topicId));
-
-	            return ResponseEntity.ok().build();
+	            this.userService.subscribe(Long.parseLong(subscribtion.getUserId()), Long.parseLong(subscribtion.getTopicId()));
+	    		MessageResponse messageResponse = new MessageResponse("Subscribed with success!");
+	            return new ResponseEntity<>(messageResponse, HttpStatus.OK);
 	        } catch (NumberFormatException e) {
 	            return ResponseEntity.badRequest().build();
 	        }	
 	}
-	@PostMapping("{id}/unsubscribe/{topicId}")
-	public ResponseEntity<?> unsubscribe(@PathVariable("id") String id, @PathVariable("topicId") String topicId){
+	@PostMapping("/user/{id}/unsubscribe/{topicId}")
+	public ResponseEntity<MessageResponse> unsubscribe(@RequestBody SubscribtionRequest subscribtion){
 		   try {
-	            this.userService.unsubscribe(Long.parseLong(id), Long.parseLong(topicId));
-
-	            return ResponseEntity.ok().build();
+	            this.userService.unsubscribe(Long.parseLong(subscribtion.getUserId()), Long.parseLong(subscribtion.getTopicId()));
+	    		MessageResponse messageResponse = new MessageResponse("Unsubscribed with success!");
+	            return new ResponseEntity<>(messageResponse, HttpStatus.OK);
 	        } catch (NumberFormatException e) {
 	            return ResponseEntity.badRequest().build();
 	        }	

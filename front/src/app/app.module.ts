@@ -15,7 +15,8 @@ import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { MeComponent } from './components/me/me.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
-
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ListComponent } from './features/topics/list/list.component';
 
 const materialModule = [
   MatButtonModule,
@@ -26,10 +27,12 @@ const materialModule = [
   MatToolbarModule,
 ];
 @NgModule({
-  declarations: [AppComponent, HomeComponent, MeComponent, NotFoundComponent],
+  declarations: [AppComponent, HomeComponent, MeComponent, NotFoundComponent, ListComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    ReactiveFormsModule,
+    FormsModule,
     BrowserAnimationsModule,
     MatButtonModule,
     HttpClientModule,
