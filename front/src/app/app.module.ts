@@ -17,12 +17,14 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ListComponent } from './features/topics/list/list.component';
+import { MatInputModule } from '@angular/material/input';
 
 const materialModule = [
   MatButtonModule,
   MatCardModule,
   MatIconModule,
   MatFormFieldModule,
+  MatInputModule,
   MatSnackBarModule,
   MatToolbarModule,
 ];

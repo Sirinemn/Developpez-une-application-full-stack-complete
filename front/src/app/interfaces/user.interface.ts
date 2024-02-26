@@ -1,10 +1,10 @@
 import { Topic } from "./topic.interface";
 
 export interface User {
-    id: number;
+    id?: number;
     email: string;
     name: string;
-    topics: Topic[];
-    createdAt: Date;
+    topics?: Topic[];
+    createdAt?: Date;
     updatedAt?: Date;
   }

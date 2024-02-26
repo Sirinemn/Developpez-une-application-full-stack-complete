@@ -4,8 +4,8 @@ export interface Article {
   content: string;
   topicId: number;
   userId: number;
-  topicName: string;
-  userName: string;
+  topicName?: string;
+  userName?: string;
   createdAt?: Date;
   updatedAt?: Date;
 }

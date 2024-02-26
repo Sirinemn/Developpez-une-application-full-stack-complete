@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ArticlesResponse } from '../interfaces/api/articlesResponse.interface';
 import { Article } from '../interfaces/article.interface';
+import { MessageResponse } from 'src/app/interfaces/api/messageResponse.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -20,5 +21,7 @@ export class ArticleApiService {
   public detail(id: string): Observable<Article>{
     return this.httpClient.get<Article>(`${this.pathService}/article/${id}`)
   }
-
+  public create(article: Article): Observable<MessageResponse> {
+    return this.httpClient.post<MessageResponse>(`${this.pathService}/article`, article)
+  }
 }

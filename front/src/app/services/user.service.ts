@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Topic } from '../interfaces/topic.interface';
 import { MessageResponse } from '../interfaces/api/messageResponse.interface';
 import { Subscribtion } from '../interfaces/api/subscribtion.interface';
+import { User } from '../interfaces/user.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -22,8 +23,8 @@ export class UserService {
   public subscribe(subscribtion: Subscribtion): Observable<MessageResponse>{
     return this.httpClient.post<MessageResponse>(`${this.pathService}/${subscribtion.userId}/subscribe/${subscribtion.topicId}`, subscribtion)
   }
-  public update(id: string, form: FormData): Observable<MessageResponse>{
-    return this.httpClient.put<MessageResponse>(`${this.pathService}/update/${id}`, form)
+  public update(id: string, user: User): Observable<MessageResponse>{
+    return this.httpClient.put<MessageResponse>(`${this.pathService}/update/${id}`, user)
 
   }
 
