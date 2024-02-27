@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -90,12 +91,11 @@ public class UserController {
 	            return ResponseEntity.badRequest().build();
 	        }	
 	}
-	@PostMapping("/user/{id}/unsubscribe/{topicId}")
-	public ResponseEntity<MessageResponse> unsubscribe(@RequestBody SubscribtionRequest subscribtion){
+	@DeleteMapping("/user/{id}/unsubscribe/{topicId}")
+	public ResponseEntity<?> unsubscribe(@PathVariable String id,@PathVariable String topicId){
 		   try {
-	            this.userService.unsubscribe(Long.parseLong(subscribtion.getUserId()), Long.parseLong(subscribtion.getTopicId()));
-	    		MessageResponse messageResponse = new MessageResponse("Unsubscribed with success!");
-	            return new ResponseEntity<>(messageResponse, HttpStatus.OK);
+	            this.userService.unsubscribe(Long.parseLong(id), Long.parseLong(topicId));
+	            return ResponseEntity.ok().build();
 	        } catch (NumberFormatException e) {
 	            return ResponseEntity.badRequest().build();
 	        }	

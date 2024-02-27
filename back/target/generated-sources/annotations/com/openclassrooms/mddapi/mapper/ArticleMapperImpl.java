@@ -1,7 +1,6 @@
 package com.openclassrooms.mddapi.mapper;
 
 import com.openclassrooms.mddapi.dto.ArticleDto;
-import com.openclassrooms.mddapi.enumeration.Topics;
 import com.openclassrooms.mddapi.models.Article;
 import com.openclassrooms.mddapi.models.Topic;
 import com.openclassrooms.mddapi.models.User;
@@ -12,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-02-25T20:46:20+0100",
+    date = "2024-02-27T22:15:36+0100",
     comments = "version: 1.5.1.Final, compiler: Eclipse JDT (IDE) 3.35.0.v20230814-2020, environment: Java 17.0.8.1 (Eclipse Adoptium)"
 )
 @Component
@@ -72,10 +71,7 @@ public class ArticleMapperImpl extends ArticleMapper {
 
         ArticleDto.ArticleDtoBuilder articleDto = ArticleDto.builder();
 
-        Topics name = articleTopicName( article );
-        if ( name != null ) {
-            articleDto.topicName( name.name() );
-        }
+        articleDto.topicName( articleTopicName( article ) );
         articleDto.userName( articleUserName( article ) );
         articleDto.topicId( articleTopicId( article ) );
         articleDto.content( article.getContent() );
@@ -88,7 +84,7 @@ public class ArticleMapperImpl extends ArticleMapper {
         return articleDto.build();
     }
 
-    private Topics articleTopicName(Article article) {
+    private String articleTopicName(Article article) {
         if ( article == null ) {
             return null;
         }
@@ -96,7 +92,7 @@ public class ArticleMapperImpl extends ArticleMapper {
         if ( topic == null ) {
             return null;
         }
-        Topics name = topic.getName();
+        String name = topic.getName();
         if ( name == null ) {
             return null;
         }
