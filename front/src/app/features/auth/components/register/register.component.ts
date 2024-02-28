@@ -38,4 +38,7 @@ export class RegisterComponent {
       error: (_) => (this.onError = true),
     });
   }
+  public back() {
+    window.history.back();
+  }
 }

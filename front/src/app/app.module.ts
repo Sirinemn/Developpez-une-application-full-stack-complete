@@ -16,8 +16,8 @@ import { MeComponent } from './components/me/me.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ListComponent } from './features/topics/list/list.component';
 import { MatInputModule } from '@angular/material/input';
+import { ListComponent } from './features/topics/components/list/list.component';
 
 const materialModule = [
   MatButtonModule,
@@ -29,7 +29,14 @@ const materialModule = [
   MatToolbarModule,
 ];
 @NgModule({
-  declarations: [AppComponent, HomeComponent, MeComponent, NotFoundComponent, ListComponent],
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    MeComponent,
+    NotFoundComponent,
+    ListComponent
+
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,

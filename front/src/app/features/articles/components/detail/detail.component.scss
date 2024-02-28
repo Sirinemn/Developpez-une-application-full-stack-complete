@@ -1,0 +1,17 @@
+.subtitle, .item, .mt2{
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+}
+mat-card-subtitle{
+    margin: 10px 10px;
+}
+.addComment{
+    background-color: #D4D3D4;
+    width: 120px;
+    border-radius: 10px;
+}
+.textarea{
+    border-radius: 10px;
+    width: 500px;
+}

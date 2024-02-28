@@ -33,7 +33,7 @@ export class FormComponent implements OnInit {
       userId: this.userId}as Article;
     this.articleService.create(article).subscribe((messageResponse:MessageResponse)=> 
     {this.matSnackBar.open(messageResponse.message, "Close", { duration: 3000});
-    this.router.navigate(['sessions']);}
+    this.router.navigate(['articles']);}
     );
   }
   private initForm(): void {
@@ -42,5 +42,8 @@ export class FormComponent implements OnInit {
       topicId: [ '',[Validators.required] ],
       content: [ '', [Validators.required,Validators.max(2000)  ]],
     });
+  }
+  public back() {
+    window.history.back();
   }
 }

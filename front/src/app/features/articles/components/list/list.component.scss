@@ -6,6 +6,9 @@
   
       .item {
         min-width: 250px;
+        background-color: #D4D3D4;
+        overflow: scroll;
+
   
         .picture {
           max-width: 400px;
@@ -13,5 +16,11 @@
         }
       }
     }
+  }
+  .items{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 200px 200px;
+
   }
   

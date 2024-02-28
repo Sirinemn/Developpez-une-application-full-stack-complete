@@ -1,21 +1,20 @@
+<div fxLayout="row" fxLayoutAlign="start center">
+  <button mat-icon-button (click)="back()">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+</div>
 <div class="m3">
     <mat-card>
       <mat-card-title>
-        <div fxLayout="row" fxLayoutAlign="start center">
-          <button mat-icon-button (click)="back()">
-            <mat-icon>arrow_back</mat-icon>
-          </button>
           <h1>Profil Utilisateur</h1>
-        </div>
       </mat-card-title>
       <mat-card-content>
         <form class="mt2" fxLayout="column" [formGroup]="meForm" (ngSubmit)="submit()">
-  
-          <mat-form-field appearance="outline" class="" fxFlex>
-            <input matInput formControlName="name" >
+          <mat-form-field appearance="outline" class="field" fxFlex>
+            <input matInput formControlName="name" placeholder="{{user.name}}">
           </mat-form-field>
-          <mat-form-field appearance="outline" class="" fxFlex>
-            <input matInput formControlName="email">
+          <mat-form-field appearance="outline" class="field" fxFlex>
+            <input matInput formControlName="email" placeholder="{{user.email}}">
           </mat-form-field>    
           <div fxLayout="row" fxLayoutAlign="center center">
             <button mat-raised-button color="primary" type="submit" id="save">
@@ -26,7 +25,7 @@
         </mat-card-content>
         <mat-card-content>
           <div>
-            <button (click)="logout()" mat-button>Se déconnecter</button>
+            <button (click)="logout()"  class="deconnecter" mat-button>Se déconnecter</button>
           </div>
       </mat-card-content>
     </mat-card>
@@ -39,13 +38,13 @@
         <mat-card-title class="m0"></mat-card-title>
        
       </mat-card-header>
-      <div class="items mt2" fxLayout="row wrap" fxLayout.lt-md="column">
+      <div class="items" fxLayout="row wrap" fxLayout.lt-md="column">
         <mat-card class="item" *ngFor="let topic of topics$ | async" fxFlex>
           <mat-card-header>
             <mat-card-title>{{ topic.name }}</mat-card-title>
           </mat-card-header>
        
-          <mat-card-content>
+          <mat-card-content class="content">
             <p>
               {{ topic.description }}
             </p>
@@ -54,7 +53,7 @@
             <button id="unsubscribe"
               mat-raised-button
               color="primary"
-              (click)="unsubscribe(topic.id)">
+              (click)="unsubscribe(topic.id!)">
               <span class="ml1">Se désabonner</span>
             </button>
           </mat-card-actions>
