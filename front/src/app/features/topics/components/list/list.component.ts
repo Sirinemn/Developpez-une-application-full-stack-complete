@@ -29,15 +29,13 @@ export class ListComponent implements OnInit {
     this.userService
     .getTopics(this.userId)
     .subscribe((list) => {
-      this.topicIdList=list.map(topic => topic.id!); 
-   });
-   
-    this.topicService
+      this.topicIdList = list.map(topic => topic.id!); 
+      this.topicService
       .getAllTopics()
       .subscribe((result) =>{
         this.topics = result.topics.filter((topic)=> !this.topicIdList.includes(topic.id!))
-      }
-      );
+      });
+   });
   }
 
   public subscribe(id: number) {
