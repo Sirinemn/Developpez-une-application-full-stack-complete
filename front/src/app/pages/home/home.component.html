@@ -1,7 +1,14 @@
 <div class="center">
   <img src="/assets/logo_p6.png" alt="logo" />
   <h1>Welcome to MDD</h1>
-  <button mat-raised-button color="primary" (click)="connect()">se connecter</button>
-  <button mat-raised-button color="primary" (click)="register()">s'inscrire</button>
-
+  <div class="boutons">
+  <button mat-raised-button class="btn1" (click)="connect()">
+    <mat-icon>login</mat-icon>
+    <span >Se connecter</span>
+  </button>
+  <button mat-raised-button class="btn2" (click)="register()">
+    <mat-icon>register</mat-icon>
+    <span >S'inscrire</span>
+  </button>
+</div>
 </div>

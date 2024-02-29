@@ -14,10 +14,7 @@ export class RegisterComponent {
 
   public form = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
-    firstName: [
-      '',
-      [Validators.required, Validators.min(3), Validators.max(20)],
-    ],
+    
     lastName: [
       '',
       [Validators.required, Validators.min(3), Validators.max(20)],
@@ -40,5 +37,8 @@ export class RegisterComponent {
       next: (_: void) => this.router.navigate(['/login']),
       error: (_) => (this.onError = true),
     });
+  }
+  public back() {
+    window.history.back();
   }
 }

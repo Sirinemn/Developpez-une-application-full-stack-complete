@@ -40,14 +40,21 @@ public class UserService {
 	    public User findById(Long id) {
 	        return this.userRepository.findById(id).orElse(null);
 	    }
-	    public void updateUser(String lastName, String email, final Long id) {
+	    public User findByEmail(String email) {
+	    	return this.userRepository.findByEmail(email).orElse(null);
+	    }
+	    public void updateUser(String name, String email, final Long id) {
 			LocalDateTime now = LocalDateTime.now();
 	    	User user = userRepository.findById(id).orElse(null);
-	    	user.setLastName(lastName);
+	    	user.setName(name);
 	    	user.setEmail(email);
 	    	user.setUpdatedAt(now);
 	    	userRepository.save(user);
 	    }
+	    public User getUserByName(String name) {
+			User user = userRepository.findByName(name).orElse(null);
+			return user;
+		}
 	    public Set<Article> getArticles(Long id){
 	    	User user = userRepository.findById(id).orElse(null);
 	    	Set<Topic> topics = user.getTopics();

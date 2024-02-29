@@ -5,3 +5,23 @@
   align-items: center;
   flex-direction: column;
 }
+.boutons{
+  display: flex;
+  flex-direction: row;
+  gap: 100px;
+}
+.btn1, .btn2{
+  border-radius: 10px;
+  border-color: black;
+}
+@media(max-width: 550px) {
+  img{
+   width: 200px;
+
+  }
+  .boutons{
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+  }
+ }

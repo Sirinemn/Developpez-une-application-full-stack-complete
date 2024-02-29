@@ -1,11 +1,50 @@
-.app {
-    .link {
-        cursor: pointer;
-        font-size: 16px;
-        text-decoration: none;
-    }
 
-    .link + .link {
-        margin-left: 10px;
+.img{
+    height: 85px;
+    width: 150px;
+}
+
+*{
+    list-style-type: none;
+    text-decoration: none;
+}
+.btn{
+    display: none;
+}
+
+li a:hover {
+    opacity: 50%;;
+}
+.active{
+    color: purple
+}
+nav ul{
+    display: flex;
+    justify-content: end; 
+}
+nav li{
+    position: relative;
+    bottom: 80px;
+    padding: 10px;
+    width: 60px;
+}
+.container{
+    height: 70px;
+    background-color: lightgrey;
+}
+
+
+
+@media screen and (max-width:550px){
+   
+    .btn{
+        display: inline;
+        float: right;
+        position: relative;
+        bottom: 70px;
+        padding: 5px;
+    }
+    nav ul{
+        display: none;
     }
 }

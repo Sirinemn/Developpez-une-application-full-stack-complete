@@ -1,15 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { SessionService } from 'src/app/services/session.service';
+import { ArticleApiService } from '../../services/article-api.service';
+import { User } from 'src/app/interfaces/user.interface';
 
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
-export class ListComponent implements OnInit {
+export class ListComponent {
 
-  constructor() { }
+  constructor(private sessionService:SessionService,
+    private articleApiService: ArticleApiService
+    ) { }
 
-  ngOnInit(): void {
-  }
+    public articles$ = this.articleApiService.allByUser(JSON.parse(localStorage.getItem('userID')!));
+
+    get user(): User | undefined {
+      return this.sessionService.user;
+    }
+
 
 }

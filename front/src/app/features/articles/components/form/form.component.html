@@ -1,1 +1,38 @@
-<p>form works!</p>
+<div fxLayout="row" fxLayoutAlign="start center">
+  <button mat-icon-button (click)="back()">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+</div>
+<div class="create">
+    <mat-card>
+      <mat-card-title>
+          <h1>Créer un nouvel article <article></article></h1>
+      </mat-card-title>
+      <mat-card-content >
+        <form class="mt2" fxLayout="column" [formGroup]="articleForm" (ngSubmit)="submit()">
+          <mat-form-field appearance="outline" class="field">
+            <mat-label>Sélectionner un thème</mat-label>
+            <mat-select ngDefaultControl formControlName="topicId" >
+              <mat-option *ngFor="let topic of (topics$ | async)?.topics" [value]="topic.id">
+                {{topic.name}} 
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="field" fxFlex>
+            <mat-label>Titre de l'article</mat-label>
+            <input matInput formControlName="titre">
+          </mat-form-field>
+          <mat-form-field appearance="outline" fxFlex class="textarea">
+            <mat-label>Contenu de l'article</mat-label>
+            <textarea matInput rows="8" formControlName="content"></textarea>
+          </mat-form-field>       
+          <div fxLayout="row" fxLayoutAlign="center center">
+            <button mat-raised-button color="primary" type="submit" [disabled]="articleForm.invalid " id="save">
+              Créer
+            </button>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  

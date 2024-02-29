@@ -14,22 +14,34 @@ import { HomeComponent } from './pages/home/home.component';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { MeComponent } from './components/me/me.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
-import { ListComponent } from './features/articles/components/list/list.component';
-import { DetailComponent } from './features/articles/components/detail/detail.component';
-import { FormComponent } from './features/articles/components/form/form.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { ListComponent } from './features/topics/components/list/list.component';
 
 const materialModule = [
   MatButtonModule,
   MatCardModule,
   MatIconModule,
+  MatFormFieldModule,
+  MatInputModule,
   MatSnackBarModule,
   MatToolbarModule,
 ];
 @NgModule({
-  declarations: [AppComponent, HomeComponent, MeComponent, NotFoundComponent, ListComponent, DetailComponent, FormComponent],
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    MeComponent,
+    NotFoundComponent,
+    ListComponent
+
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    ReactiveFormsModule,
+    FormsModule,
     BrowserAnimationsModule,
     MatButtonModule,
     HttpClientModule,

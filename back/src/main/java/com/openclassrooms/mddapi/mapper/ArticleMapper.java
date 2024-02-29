@@ -29,7 +29,7 @@ public abstract class ArticleMapper implements EntityMapper<ArticleDto, Article>
 	public abstract Article toEntity(ArticleDto articleDto);
 	@Mappings({
 		@Mapping(source = "article.topic.name", target = "topicName"),
-		@Mapping(source = "article.user.lastName", target = "userName"),
+		@Mapping(source = "article.user.name", target = "userName"),
         @Mapping(source = "article.topic.id", target = "topicId"),
         @Mapping(expression = "java(article.getUser().getId())", target = "userId"),
 

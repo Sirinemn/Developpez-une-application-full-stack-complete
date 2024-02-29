@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-02-20T13:07:48+0100",
+    date = "2024-02-27T22:15:36+0100",
     comments = "version: 1.5.1.Final, compiler: Eclipse JDT (IDE) 3.35.0.v20230814-2020, environment: Java 17.0.8.1 (Eclipse Adoptium)"
 )
 @Component
@@ -75,12 +75,29 @@ public class CommentMapperImpl extends CommentMapper {
 
         CommentDto.CommentDtoBuilder commentDto = CommentDto.builder();
 
+        commentDto.userName( commentUserName( comment ) );
         commentDto.userId( commentUserId( comment ) );
-        commentDto.articleId( commentArticleId( comment ) );
         commentDto.content( comment.getContent() );
         commentDto.id( comment.getId() );
 
+        commentDto.articleId( comment.getArticle().getId() );
+
         return commentDto.build();
+    }
+
+    private String commentUserName(Comment comment) {
+        if ( comment == null ) {
+            return null;
+        }
+        User user = comment.getUser();
+        if ( user == null ) {
+            return null;
+        }
+        String name = user.getName();
+        if ( name == null ) {
+            return null;
+        }
+        return name;
     }
 
     private Long commentUserId(Comment comment) {
@@ -92,21 +109,6 @@ public class CommentMapperImpl extends CommentMapper {
             return null;
         }
         Long id = user.getId();
-        if ( id == null ) {
-            return null;
-        }
-        return id;
-    }
-
-    private Long commentArticleId(Comment comment) {
-        if ( comment == null ) {
-            return null;
-        }
-        Article article = comment.getArticle();
-        if ( article == null ) {
-            return null;
-        }
-        Long id = article.getId();
         if ( id == null ) {
             return null;
         }

@@ -1,6 +1,5 @@
 package com.openclassrooms.mddapi.models;
 
-import com.openclassrooms.mddapi.enumeration.Topics;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -17,21 +16,29 @@ public class Topic {
 	@Column(name="topic_id")
 	private Long id;
 	
-	private Topics name;
+	private String name;
+	
+	private String description;
 	
 	public Long getId() {
 		return id;
 	}
 
+	public void setDescription(String description) {
+		this.description = description;
+	}
 	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public Topics getName() {
+	public String getName() {
 		return name;
 	}
+	public String getDescription() {
+		return description;
+	}
 
-	public void setName(Topics name) {
+	public void setName(String name) {
 		this.name = name;
 	}
 }

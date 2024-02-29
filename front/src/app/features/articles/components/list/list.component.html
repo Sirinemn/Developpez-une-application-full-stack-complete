@@ -1,1 +1,43 @@
-<p>list works!</p>
+<div class="list">
+    <mat-card>
+      <mat-card-header fxLayout="row" fxLayoutAlign="space-between center">
+        <mat-card-title class="m0"></mat-card-title>
+        <button
+              mat-raised-button
+              color="primary"
+          routerLink="create">
+          <mat-icon>add</mat-icon>
+          <span class="ml1" id="create">Créer un article</span>
+        </button>
+      </mat-card-header>
+      <div class="items" >
+        <mat-card class="item" *ngFor="let article of (articles$ | async)?.articles" fxFlex>
+          <mat-card-header>
+            <mat-card-title>{{ article.titre }}</mat-card-title>
+          </mat-card-header>
+          <mat-card-subtitle>
+            Date : {{ article.createdAt| date : "longDate" }}
+          </mat-card-subtitle>
+          <mat-card-subtitle>
+            Auteur : {{ article.userName}}
+          </mat-card-subtitle>
+          <mat-card-content>
+            <p>
+              {{ article.content }}
+            </p>
+          </mat-card-content>
+          <mat-card-actions>
+            <button id="detail"
+              mat-raised-button
+              color="primary"
+              [routerLink]="['detail', article.id]"
+            >
+              <mat-icon>search</mat-icon>
+              <span class="ml1">Detail</span>
+            </button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </mat-card>
+  </div>
+  
