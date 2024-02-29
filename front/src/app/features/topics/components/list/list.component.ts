@@ -28,14 +28,14 @@ export class ListComponent implements OnInit {
     this.userId =  JSON.parse(localStorage.getItem('userID')!);
     this.userService
     .getTopics(this.userId)
-    .subscribe((list) => list.map(
-      (topic) => this.topicIdList.push(topic.id!)
-      ));
+    .subscribe((list) => {
+      this.topicIdList=list.map(topic => topic.id!); 
+   });
+   
     this.topicService
       .getAllTopics()
       .subscribe((result) =>{
-        result.topics.filter((topic)=> !this.topicIdList.includes(topic.id!))
-        .map((topic)=> this.topics.push(topic))
+        this.topics = result.topics.filter((topic)=> !this.topicIdList.includes(topic.id!))
       }
       );
   }

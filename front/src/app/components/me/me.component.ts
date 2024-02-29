@@ -18,7 +18,10 @@ export class MeComponent implements OnInit {
   public user!: User;
   public userId!: string;
   public topics$!: Observable<Topic[]> ;
-  meForm!: FormGroup<any>;
+  meForm: FormGroup= this.fb.group({
+    name: ['', [Validators.required]],
+    email: ['', [Validators.required]],
+  });
 
   constructor(
     private fb: FormBuilder,
@@ -31,12 +34,11 @@ export class MeComponent implements OnInit {
 
   public ngOnInit() {
     this.userId =  JSON.parse(localStorage.getItem('userID')!);
-    this.authService.getUserById(this.userId).subscribe((user: User) => (this.user = user));
+    this.authService.getUserById(this.userId).subscribe((user: User) => {(this.user = user);
+      this.initForm(this.user);});
     this.topics$= this.userService.getTopics(
       this.userId?.toString()
-    );
-    console.log(this.user);
-    this.initForm(this.user);
+    );    
   }
   public logout(): void {
     this.sessionService.logOut();
@@ -46,9 +48,11 @@ export class MeComponent implements OnInit {
     window.history.back();
   }
   public submit(): void {
-    const user = this.meForm?.value as User;
+    const formData = new FormData();
+    formData.append('name', this.meForm!.get('name')?.value);
+    formData.append('email', this.meForm!.get('email')?.value);
     this.userService
-      .update(this.userId, this.user)
+      .update(formData, this.userId)
       .subscribe((messageResponse: MessageResponse) => {
         this.matSnackBar.open(messageResponse.message, 'Close', {
           duration: 3000,
@@ -62,15 +66,10 @@ export class MeComponent implements OnInit {
       .subscribe();
   }
   private initForm(user?: User): void {
-    this.meForm = this.fb.group({
-      name: [user ? user.name : '', [Validators.required]],
-      email: [user ? user.email : '', [Validators.required]],
-    });
-    this.meForm.patchValue({
-      name:  user?.name,
-      email: user?.email
-  
-      })
+    this.meForm.controls
+    ['name'].setValue(user?.name) 
+    this.meForm.controls
+    ['email'].setValue(user?.email) 
   }
 
 }

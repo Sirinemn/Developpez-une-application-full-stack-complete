@@ -27,11 +27,8 @@ export class UserService {
       subscribtion
     );
   }
-  public update(id: string, user: User): Observable<MessageResponse> {
+  public update(form: FormData,id: string): Observable<MessageResponse> {
     return this.httpClient.put<MessageResponse>(
-      `${this.pathService}/update/${id}`,
-      user
-    );
+      `${this.pathService}/update/${id}`,form);
   }
-  
 }

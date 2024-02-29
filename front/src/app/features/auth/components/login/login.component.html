@@ -3,19 +3,19 @@
         <mat-icon>arrow_back</mat-icon>
     </button>
 </div>
-<div class="login" >
+<div class="login" fxLayout="row" fxLayoutAlign="center center" >
     <mat-card>
         
         <mat-card-header fxLayoutAlign="center center">
             <mat-card-title>Se connecter</mat-card-title>
         </mat-card-header>
-        <form class="login-form" [formGroup]="form" (ngSubmit)="submit()">
+        <form class="login-form"[formGroup]="form" (ngSubmit)="submit()">
             <mat-card-content fxLayout="column">
-                <mat-form-field >
+                <mat-form-field class="field">
                     <label>Email d'utilisateur</label>
                     <input matInput  formControlName="email" class="mail">
                 </mat-form-field>
-                <mat-form-field >
+                <mat-form-field class="field" >
                     <label>Mot de passe</label>
                     <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" class="pswd">
                     <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"

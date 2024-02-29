@@ -14,3 +14,14 @@
   border-radius: 10px;
   border-color: black;
 }
+@media(max-width: 550px) {
+  img{
+   width: 200px;
+
+  }
+  .boutons{
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+  }
+ }

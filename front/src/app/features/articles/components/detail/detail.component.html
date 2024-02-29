@@ -49,13 +49,13 @@
                     </p>
                 </mat-card-content>
     </mat-card>
-    <mat-card class="mt2">
+    <mat-card >
             <mat-card-content>
-            <form [formGroup]="commentForm" (ngSubmit)="addComment()" fxLayout="column">
+            <form [formGroup]="commentForm" (ngSubmit)="addComment()" class="mt2">
                 <textarea matInput placeholder="Laisser ici un commentaire" rows="6" formControlName="comment" class="textarea"></textarea>
-                <div fxLayout="row" fxLayoutAlign="end center" class="mt2">
+                <div fxLayout="row" fxLayoutAlign="end center" >
                     <button mat-raised-button color="primary" type="submit"
-                        [disabled]="commentForm.invalid">Send</button>
+                        [disabled]="commentForm.invalid"><mat-icon>send</mat-icon></button>
                 </div>
             </form>
         </mat-card-content>
