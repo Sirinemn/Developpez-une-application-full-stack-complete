@@ -1,13 +1,29 @@
+
 <div *ngIf="$isLogged() | async" class="container">
-    <img src="/assets/logo_p6.png" alt="logo" class="img"/>
+  <img src="/assets/logo_p6.png" alt="logo" class="img"/>
+  <mat-drawer-container class="example-container">
+    <mat-drawer #drawer [mode]="'over'"  fixedInViewport
+    fixedTopGap="100"
+    position="end">  
+     <div class="sidenav">
+        <div routerLinkActive = "active"><a routerLink="articles" class="link"  >Articles</a></div>
+        <div routerLinkActive = "active"><a routerLink="topics" class="link">Thèmes</a></div>
+        <div routerLinkActive = "active"><mat-icon routerLink="me" class="link" >account_circle</mat-icon></div>
+     </div></mat-drawer>
+    <mat-drawer-content>
+  
+      <button mat-raised-button (click)="drawer.toggle()"><mat-icon>dehaze</mat-icon></button>
+    </mat-drawer-content>
+    
+  </mat-drawer-container>
     <nav class="navbar">
       <ul>
         <li routerLinkActive = "active"><a routerLink="articles" class="link"  >Articles</a></li>
         <li routerLinkActive = "active"><a routerLink="topics" class="link">Thèmes</a></li>
         <li routerLinkActive = "active"><mat-icon routerLink="me" class="link" >account_circle</mat-icon></li>
       </ul>
-    <button class="btn"><mat-icon>dehaze</mat-icon></button>
     </nav>
-  </div>
-  <hr>
 <router-outlet></router-outlet>
+
+</div>
+

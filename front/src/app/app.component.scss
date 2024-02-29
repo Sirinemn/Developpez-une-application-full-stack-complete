@@ -8,10 +8,6 @@
     list-style-type: none;
     text-decoration: none;
 }
-.btn{
-    display: none;
-}
-
 li a:hover {
     opacity: 50%;;
 }
@@ -28,23 +24,26 @@ nav li{
     padding: 10px;
     width: 60px;
 }
-.container{
-    height: 70px;
-    background-color: lightgrey;
+mat-drawer-content{
+    display: none;
 }
-
-
 
 @media screen and (max-width:550px){
    
-    .btn{
-        display: inline;
+    mat-drawer-content {
+        display: flex;
+        flex-direction: column;
+        align-items: end;
+      }
+      .example-container {
+        padding: 20px;
+        width: 50%;
+        height: 100%;
         float: right;
-        position: relative;
-        bottom: 70px;
-        padding: 5px;
-    }
+
+      }
     nav ul{
         display: none;
     }
-}
+
+}  
