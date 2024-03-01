@@ -5,7 +5,8 @@
     <mat-sidenav-container class="example-container">
       <mat-sidenav #drawer [mode]="'over'"  fixedInViewport
       fixedTopGap="100"
-      position="end">  
+      position="end"
+      (click)="drawer.close()">  
        <div class="sidenav">
           <div routerLinkActive = "active"><a routerLink="articles" class="link"  >Articles</a></div>
           <div routerLinkActive = "active"><a routerLink="topics" class="link">Thèmes</a></div>
