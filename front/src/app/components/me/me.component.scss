@@ -35,3 +35,29 @@ h1{
 
       }
     }
+    @media(max-width: 550px) {
+      .items{
+        display: grid;
+        grid-template-columns:  1fr;
+    
+      }
+      .item {
+        background-color: #D4D3D4;
+        overflow: auto;
+        width: 50px;
+  
+      }  
+     }
+@media (max-width:280px) {
+      .items{
+        display: grid;
+        grid-template-columns: 1fr;
+}
+      .item {
+        background-color: #D4D3D4;
+        overflow: auto;
+        width: 5px;
+        height: 100px;
+        gap: 5px;
+  
+      }  }
