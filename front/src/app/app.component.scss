@@ -16,7 +16,7 @@ li a:hover {
 }
 nav ul{
     display: flex;
-    justify-content: end; 
+    justify-content: flex-end; 
 }
 nav li{
     position: relative;
@@ -33,7 +33,7 @@ mat-drawer-content{
     mat-drawer-content {
         display: flex;
         flex-direction: column;
-        align-items: end;
+        align-items:flex-end;
       }
       .example-container {
         padding: 20px;

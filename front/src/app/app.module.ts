@@ -48,7 +48,6 @@ const materialModule = [
     ReactiveFormsModule,
     FormsModule,
     BrowserAnimationsModule,
-    MatButtonModule,
     HttpClientModule,
     ...materialModule,
   ],
