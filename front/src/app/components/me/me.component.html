@@ -4,62 +4,68 @@
   </button>
 </div>
 <div class="m3">
-    <mat-card>
-      <mat-card-title>
-          <h1>Profil Utilisateur</h1>
-      </mat-card-title>
-      <mat-card-content>
-        <form class="mt2" fxLayout="column" [formGroup]="meForm" (ngSubmit)="submit()">
-          <mat-form-field appearance="outline" class="field" fxFlex>
-            <input matInput formControlName="name" placeholder="{{user.name}}">
-          </mat-form-field>
-          <mat-form-field appearance="outline" class="field" fxFlex>
-            <input matInput formControlName="email" placeholder="{{user.email}}">
-          </mat-form-field>    
-          <div fxLayout="row" fxLayoutAlign="center center">
-            <button mat-raised-button color="primary" type="submit" id="save">
-              Sauvegarder
-            </button>
-          </div>
-        </form>
-        </mat-card-content>
-        <mat-card-content>
-          <div>
-            <button (click)="logout()"  class="deconnecter" mat-button>Se déconnecter</button>
-          </div>
-      </mat-card-content>
-    </mat-card>
-  </div>
-  <hr>
-  <h1>Abonnements</h1>
-  <div class="topics">
-    <mat-card>
-      <mat-card-header fxLayout="row" fxLayoutAlign="space-between center">
-        <mat-card-title class="m0"></mat-card-title>
-       
-      </mat-card-header>
-      <div class="items" fxLayout="row wrap" fxLayout.lt-md="column">
-        <mat-card class="item" *ngFor="let topic of topics$ | async" fxFlex>
-          <mat-card-header>
-            <mat-card-title>{{ topic.name }}</mat-card-title>
-          </mat-card-header>
-       
-          <mat-card-content class="content">
-            <p>
-              {{ topic.description }}
-            </p>
-          </mat-card-content>
-          <mat-card-actions>
-            <button id="unsubscribe"
-              mat-raised-button
-              color="primary"
-              (click)="unsubscribe(topic.id!)">
-              <span class="ml1">Se désabonner</span>
-            </button>
-          </mat-card-actions>
-        </mat-card>
+  <mat-card>
+    <mat-card-title>
+      <h1>Profil Utilisateur</h1>
+    </mat-card-title>
+    <mat-card-content>
+      <form
+        class="mt2"
+        fxLayout="column"
+        [formGroup]="meForm"
+        (ngSubmit)="submit()"
+      >
+        <mat-form-field appearance="outline" class="field" fxFlex>
+          <input matInput formControlName="name" />
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="field" fxFlex>
+          <input matInput formControlName="email" />
+        </mat-form-field>
+        <div fxLayout="row" fxLayoutAlign="center center">
+          <button mat-raised-button color="primary" type="submit" id="save">
+            Sauvegarder
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+    <mat-card-content>
+      <div>
+        <button (click)="logout()" class="deconnecter" mat-button>
+          Se déconnecter
+        </button>
       </div>
-    </mat-card>
-  </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+<hr />
+<h1>Abonnements</h1>
+<div class="topics">
+  <mat-card>
+    <mat-card-header fxLayout="row" fxLayoutAlign="space-between center">
+      <mat-card-title class="m0"></mat-card-title>
+    </mat-card-header>
+    <div class="items" fxLayout="row wrap" fxLayout.lt-md="column">
+      <mat-card class="item" *ngFor="let topic of topics$ | async" fxFlex>
+        <mat-card-header>
+          <mat-card-title>{{ topic.name }}</mat-card-title>
+        </mat-card-header>
 
-  
+        <mat-card-content class="content">
+          <p>
+            {{ topic.description }}
+          </p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button
+            id="unsubscribe"
+            mat-raised-button
+            color="primary"
+            (click)="unsubscribe(topic.id!)"
+          >
+            <span class="ml1">Se désabonner</span>
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </mat-card>
+</div>

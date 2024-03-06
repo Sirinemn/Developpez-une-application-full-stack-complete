@@ -10,7 +10,7 @@ import { MessageResponse } from 'src/app/interfaces/api/messageResponse.interfac
 })
 export class ArticleApiService {
  
-  private pathService = 'http://localhost:8080/api';
+  private pathService = 'http://localhost:8081/api';
 
   constructor(private httpClient: HttpClient) { }
 

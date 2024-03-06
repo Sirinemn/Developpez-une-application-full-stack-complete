@@ -10,7 +10,7 @@ import { Topic } from '../interfaces/topic.interface';
 })
 export class TopicService {
   
-  private pathService = 'http://localhost:8080/api/topics';
+  private pathService = 'http://localhost:8081/api/topics';
 
   constructor(private httpClient: HttpClient) {}
 

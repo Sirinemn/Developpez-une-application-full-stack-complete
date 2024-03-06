@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.openclassrooms.mddapi.dto.ArticleDto;
@@ -40,65 +39,72 @@ public class UserController {
 	private final UserMapper userMapper;
 	private final ArticleMapper articleMapper;
 
-	public UserController(UserMapper userMapper,
-			UserService userService, ArticleMapper articleMapper) {
+	public UserController(UserMapper userMapper, UserService userService, ArticleMapper articleMapper) {
 		this.userService = userService;
 		this.userMapper = userMapper;
 		this.articleMapper = articleMapper;
 	}
+
 	@GetMapping("/me")
-	@ResponseBody
 	public ResponseEntity<UserDto> currentUserName(Authentication authentication) {
 		String name = authentication.getName();
 		User user = userService.getUserByName(name);
 		return ResponseEntity.ok(this.userMapper.toDto(user));
 	}
+
 	@GetMapping("/user/{id}")
 	public ResponseEntity<UserDto> getUser(@PathVariable String id) {
 		User user = userService.findById(Long.parseLong(id));
-		
+
 		return ResponseEntity.ok(this.userMapper.toDto(user));
 	}
+
 	@GetMapping("/user/{id}/topics")
-	public ResponseEntity<?> getSubscribedTopics(@PathVariable String id){
+	public ResponseEntity<?> getSubscribedTopics(@PathVariable String id) {
 		User user = userService.findById(Long.parseLong(id));
 		return ResponseEntity.ok(user.getTopics());
-		
+
 	}
+
 	@GetMapping("/user/{id}/articles")
-	public ResponseEntity<ArticleResponse> getSubscribedArticles(@PathVariable String id){
-		Set<Article> articles=userService.getArticles(Long.parseLong(id));
+	public ResponseEntity<ArticleResponse> getSubscribedArticles(@PathVariable String id) {
+		Set<Article> articles = userService.getArticles(Long.parseLong(id));
 		Set<ArticleDto> articlesDto = new HashSet<>();
-		articles.forEach(article-> articlesDto.add(articleMapper.toDto(article)));
+		articles.forEach(article -> articlesDto.add(articleMapper.toDto(article)));
 		ArticleResponse articleResponse = new ArticleResponse(articlesDto);
 		return new ResponseEntity<>(articleResponse, HttpStatus.OK);
-		
+
 	}
+
 	@PutMapping("/user/update/{id}")
-	public ResponseEntity<MessageResponse> updateUser(@RequestParam("name") @NotBlank @Size(max = 63) String name, @RequestParam("email") @NotBlank @Size(max = 63) String email, @PathVariable Long id){
+	public ResponseEntity<MessageResponse> updateUser(@RequestParam("name") @NotBlank @Size(max = 63) String name,
+			@RequestParam("email") @NotBlank @Size(max = 63) String email, @PathVariable Long id) {
 		userService.updateUser(name, email, id);
 		MessageResponse messageResponse = new MessageResponse("Updated with success!");
 		return new ResponseEntity<>(messageResponse, HttpStatus.OK);
-		
+
 	}
+
 	@PostMapping("/user/{id}/subscribe/{topicId}")
-	public ResponseEntity<MessageResponse> subscribe(@RequestBody SubscribtionRequest subscribtion){
-		   try {
-	            this.userService.subscribe(Long.parseLong(subscribtion.getUserId()), Long.parseLong(subscribtion.getTopicId()));
-	    		MessageResponse messageResponse = new MessageResponse("Subscribed with success!");
-	            return new ResponseEntity<>(messageResponse, HttpStatus.OK);
-	        } catch (NumberFormatException e) {
-	            return ResponseEntity.badRequest().build();
-	        }	
+	public ResponseEntity<MessageResponse> subscribe(@RequestBody SubscribtionRequest subscribtion) {
+		try {
+			this.userService.subscribe(Long.parseLong(subscribtion.getUserId()),
+					Long.parseLong(subscribtion.getTopicId()));
+			MessageResponse messageResponse = new MessageResponse("Subscribed with success!");
+			return new ResponseEntity<>(messageResponse, HttpStatus.OK);
+		} catch (NumberFormatException e) {
+			return ResponseEntity.badRequest().build();
+		}
 	}
+
 	@DeleteMapping("/user/{id}/unsubscribe/{topicId}")
-	public ResponseEntity<?> unsubscribe(@PathVariable String id,@PathVariable String topicId){
-		   try {
-	            this.userService.unsubscribe(Long.parseLong(id), Long.parseLong(topicId));
-	            return ResponseEntity.ok().build();
-	        } catch (NumberFormatException e) {
-	            return ResponseEntity.badRequest().build();
-	        }	
+	public ResponseEntity<?> unsubscribe(@PathVariable String id, @PathVariable String topicId) {
+		try {
+			this.userService.unsubscribe(Long.parseLong(id), Long.parseLong(topicId));
+			return ResponseEntity.ok().build();
+		} catch (NumberFormatException e) {
+			return ResponseEntity.badRequest().build();
+		}
 	}
 
 }

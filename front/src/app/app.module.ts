@@ -18,6 +18,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { ListComponent } from './features/topics/components/list/list.component';
+import { MatSelectModule } from '@angular/material/select';
+import {MatSidenavModule} from '@angular/material/sidenav';
+
 
 const materialModule = [
   MatButtonModule,
@@ -27,6 +30,8 @@ const materialModule = [
   MatInputModule,
   MatSnackBarModule,
   MatToolbarModule,
+  MatSidenavModule, 
+  MatSelectModule
 ];
 @NgModule({
   declarations: [

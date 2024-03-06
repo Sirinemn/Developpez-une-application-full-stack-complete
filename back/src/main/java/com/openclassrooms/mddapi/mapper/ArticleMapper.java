@@ -13,25 +13,25 @@ import com.openclassrooms.mddapi.services.UserService;
 
 @Component
 @Mapper(componentModel = "spring")
-public abstract class ArticleMapper implements EntityMapper<ArticleDto, Article>{
-	
+public abstract class ArticleMapper implements EntityMapper<ArticleDto, Article> {
 
 	@Autowired
 	UserService userService;
 	@Autowired
 	TopicService topicService;
-	
+
 	@Mappings({
-		@Mapping(target="user", expression="java(articleDto.getUserId() != null ? this.userService.findById(articleDto.getUserId()): null)"),
-		@Mapping(target="topic", expression="java(articleDto.getTopicId() != null ? this.topicService.findById(articleDto.getTopicId()) : null)"),
+			@Mapping(target = "user", expression = "java(articleDto.getUserId() != null ? this.userService.findById(articleDto.getUserId()): null)"),
+			@Mapping(target = "topic", expression = "java(articleDto.getTopicId() != null ? this.topicService.findById(articleDto.getTopicId()) : null)"),
+			@Mapping(target = "updatedAt", ignore = true)
 
 	})
 	public abstract Article toEntity(ArticleDto articleDto);
-	@Mappings({
-		@Mapping(source = "article.topic.name", target = "topicName"),
-		@Mapping(source = "article.user.name", target = "userName"),
-        @Mapping(source = "article.topic.id", target = "topicId"),
-        @Mapping(expression = "java(article.getUser().getId())", target = "userId"),
+
+	@Mappings({ @Mapping(source = "article.topic.name", target = "topicName"),
+			@Mapping(source = "article.user.name", target = "userName"),
+			@Mapping(source = "article.topic.id", target = "topicId"),
+			@Mapping(expression = "java(article.getUser().getId())", target = "userId"),
 
 	})
 	public abstract ArticleDto toDto(Article article);

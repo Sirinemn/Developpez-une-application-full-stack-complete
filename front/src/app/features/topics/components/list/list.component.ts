@@ -13,10 +13,9 @@ import { Topic } from '../../interfaces/topic.interface';
   styleUrls: ['./list.component.scss'],
 })
 export class ListComponent implements OnInit {
-  
-  public userId!: string;
-  public topicIdList: number[] = [];
-  public topics: Topic[]=[];
+  private userId!: string;
+  private topicIdList: number[] = [];
+  public topics: Topic[] = [];
   constructor(
     private topicService: TopicService,
     private matSnackBar: MatSnackBar,
@@ -25,24 +24,22 @@ export class ListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.userId =  JSON.parse(localStorage.getItem('userID')!);
-    this.userService
-    .getTopics(this.userId)
-    .subscribe((list) => {
-      this.topicIdList = list.map(topic => topic.id!); 
-      this.topicService
-      .getAllTopics()
-      .subscribe((result) =>{
-        this.topics = result.topics.filter((topic)=> !this.topicIdList.includes(topic.id!))
+    this.userId = JSON.parse(localStorage.getItem('userID')!);
+    this.userService.getTopics(this.userId).subscribe((list) => {
+      this.topicIdList = list.map((topic) => topic.id!);
+      this.topicService.getAllTopics().subscribe((result) => {
+        this.topics = result.topics.filter(
+          (topic) => !this.topicIdList.includes(topic.id!)
+        );
       });
-   });
+    });
   }
 
-  public subscribe(id: number) {
-    const subscribtion = {
+  subscribe(id: number): void {
+    const subscribtion: Subscribtion = {
       userId: this.userId,
       topicId: id.toString(),
-    } as Subscribtion;
+    };
     this.userService
       .subscribe(subscribtion)
       .subscribe((commentResponse: MessageResponse) => {

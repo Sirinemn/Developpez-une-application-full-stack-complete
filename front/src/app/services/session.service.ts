@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { SessionInformation } from '../interfaces/sessionInformation.interface';
 import { User } from '../interfaces/user.interface';
 
 @Injectable({

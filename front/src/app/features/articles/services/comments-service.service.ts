@@ -10,7 +10,7 @@ import { CommentRequest } from '../interfaces/api/commentRequest.interface';
 })
 export class CommentsServiceService {
 
-  private pathService = 'http://localhost:8080/api/comment';
+  private pathService = 'http://localhost:8081/api/comment';
 
   constructor(private httpClient: HttpClient) { }
 
