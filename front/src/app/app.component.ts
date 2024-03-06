@@ -8,17 +8,17 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-
   constructor(
     private authService: AuthService,
     private router: Router,
-    private sessionService: SessionService) {
-  }
+    private sessionService: SessionService
+  ) {}
 
   public ngOnInit(): void {
+    debugger
     this.autoLog();
   }
 
@@ -28,7 +28,7 @@ export class AppComponent {
 
   public logout(): void {
     this.sessionService.logOut();
-    this.router.navigate([''])
+    this.router.navigate(['']);
   }
 
   public autoLog(): void {
@@ -39,6 +39,6 @@ export class AppComponent {
       (_) => {
         this.sessionService.logOut();
       }
-    )
+    );
   }
 }
