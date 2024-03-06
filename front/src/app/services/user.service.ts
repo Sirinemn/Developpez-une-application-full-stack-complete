@@ -4,13 +4,12 @@ import { Observable } from 'rxjs';
 import { Topic } from '../features/topics/interfaces/topic.interface';
 import { MessageResponse } from '../interfaces/api/messageResponse.interface';
 import { Subscribtion } from '../interfaces/api/subscribtion.interface';
-import { User } from '../interfaces/user.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  private pathService = 'http://localhost:8080/api/user';
+  private pathService = 'http://localhost:8081/api/user';
   constructor(private httpClient: HttpClient) {}
 
   public getTopics(id: string): Observable<Topic[]> {

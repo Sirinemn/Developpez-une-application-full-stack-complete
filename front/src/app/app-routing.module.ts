@@ -7,8 +7,6 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { UnauthGuard } from './guards/unauth.guard';
 import { ListComponent } from './features/topics/components/list/list.component';
 
-// consider a guard combined with canLoad / canActivate route option
-// to manage unauthenticated user to access private routes
 const routes: Routes = [
   { path: '', component: HomeComponent },
   {

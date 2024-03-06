@@ -2,7 +2,7 @@
 
 ## Front
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.1.3.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.1.0.
 
 Don't forget to install your node_modules before starting (`npm install`).
 
@@ -14,12 +14,23 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The appli
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
-### Where to start
+## Back
 
-As you may have seen if you already started the app, a simple home page containing a logo, a title and a button is available. If you take a look at its code (in the `home.component.html`) you will see that an external UI library is already configured in the project.
+### Requirements
+* Maven 3
+* JDK 17
 
-This library is `@angular/material`, it's one of the most famous in the angular ecosystem. As you can see on their docs (https://material.angular.io/), it contains a lot of highly customizable components that will help you design your interfaces quickly.
+### Usage 
 
-Note: I recommend to use material however it's not mandatory, if you prefer you can get ride of it.
+* Connect to the API on port 8081
 
-Good luck!
+### Installation Guide
+
+* Run mvn spring-boot:run to lunch the project
+* SQL script for creating the schema is available ressources/sql/script.sql
+
+### Technologies Used
+This project is created with :
+* Spring Tool Suite 4
+
+

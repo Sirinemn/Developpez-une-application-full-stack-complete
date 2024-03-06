@@ -16,7 +16,6 @@ import { AuthSuccess } from '../../interfaces/authSuccess.interface';
 export class LoginComponent {
   public hide = true;
   public onError = false;
-  public userId =  JSON.parse(localStorage.getItem('userID')!);
 
   public form = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
