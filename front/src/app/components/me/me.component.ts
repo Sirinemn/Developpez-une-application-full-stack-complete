@@ -6,7 +6,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserService } from 'src/app/services/user.service';
 import { AuthService } from 'src/app/features/auth/services/auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Topic } from 'src/app/features/topics/interfaces/topic.interface';
 import { MessageResponse } from 'src/app/interfaces/api/messageResponse.interface';
 @Component({
@@ -17,8 +17,10 @@ import { MessageResponse } from 'src/app/interfaces/api/messageResponse.interfac
 export class MeComponent implements OnInit {
   public user!: User;
   public userId!: string;
-  public topics$!: Observable<Topic[]> ;
-  meForm: FormGroup= this.fb.group({
+  private httpSubscriptions: Subscription[] = [];
+
+  public topics$!: Observable<Topic[]>;
+  meForm: FormGroup = this.fb.group({
     name: ['', [Validators.required]],
     email: ['', [Validators.required]],
   });
@@ -33,12 +35,12 @@ export class MeComponent implements OnInit {
   ) {}
 
   public ngOnInit() {
-    this.userId =  JSON.parse(localStorage.getItem('userID')!);
-    this.authService.getUserById(this.userId).subscribe((user: User) => {(this.user = user);
-      this.initForm(this.user);});
-    this.topics$= this.userService.getTopics(
-      this.userId?.toString()
-    );    
+    this.userId = JSON.parse(localStorage.getItem('userID')!);
+    this.httpSubscriptions.push(this.authService.getUserById(this.userId).subscribe((user: User) => {
+      this.user = user;
+      this.initForm(this.user);
+    }));
+    this.topics$ = this.userService.getTopics(this.userId?.toString());
   }
   public logout(): void {
     this.sessionService.logOut();
@@ -51,25 +53,24 @@ export class MeComponent implements OnInit {
     const formData = new FormData();
     formData.append('name', this.meForm!.get('name')?.value);
     formData.append('email', this.meForm!.get('email')?.value);
-    this.userService
+    this.httpSubscriptions.push(this.userService
       .update(formData, this.userId)
       .subscribe((messageResponse: MessageResponse) => {
         this.matSnackBar.open(messageResponse.message, 'Close', {
           duration: 3000,
         });
-        this.router.navigate(['me']);
-      });
+        window.location.reload();
+      }));
   }
   public unsubscribe(topicId: number) {
-    this.userService
-      .unsbscribe(this.userId,topicId.toString())
-      .subscribe();
+    this.httpSubscriptions.push(this.userService.unsbscribe(this.userId, topicId.toString()).subscribe(()=>  window.location.reload()
+    ));
   }
   private initForm(user?: User): void {
-    this.meForm.controls
-    ['name'].setValue(user?.name) 
-    this.meForm.controls
-    ['email'].setValue(user?.email) 
+    this.meForm.controls['name'].setValue(user?.name);
+    this.meForm.controls['email'].setValue(user?.email);
   }
-
+  ngOnDestroy(): void {
+    this.httpSubscriptions.forEach(subscribtion=> subscribtion.unsubscribe());
+  }
 }

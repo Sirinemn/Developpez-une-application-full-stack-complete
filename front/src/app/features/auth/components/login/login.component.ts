@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { SessionService } from 'src/app/services/session.service';
@@ -6,16 +6,18 @@ import { Router } from '@angular/router';
 import { LoginRequest } from '../../interfaces/login-request';
 import { SessionInformation } from 'src/app/interfaces/sessionInformation.interface';
 import { User } from 'src/app/interfaces/user.interface';
-import { AuthSuccess } from '../../interfaces/authSuccess.interface';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent {
+export class LoginComponent implements OnDestroy{
   public hide = true;
   public onError = false;
+  private httpSubscription!: Subscription;
+
 
   public form = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
@@ -29,7 +31,7 @@ export class LoginComponent {
 
   public submit(): void {
     const loginRequest = this.form.value as LoginRequest;
-    this.authService.login(loginRequest).subscribe(
+    this.httpSubscription = this.authService.login(loginRequest).subscribe(
       (response: SessionInformation) => {
         localStorage.setItem('token', response.token);
         localStorage.setItem('userID', response.id.toString());
@@ -45,4 +47,7 @@ export class LoginComponent {
   public back() {
     window.history.back();
   }
+  ngOnDestroy() {
+    this.httpSubscription.unsubscribe();
+}
 }

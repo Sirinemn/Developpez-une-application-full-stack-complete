@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Observable, Subscribable } from 'rxjs';
+import { Observable, Subscribable, Subscription } from 'rxjs';
 import { ArticleApiService } from '../../services/article-api.service';
 import { TopicService } from 'src/app/features/topics/service/topic.service';
 import { Article } from '../../interfaces/article.interface';
@@ -13,11 +13,12 @@ import { Router } from '@angular/router';
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.scss']
 })
-export class FormComponent implements OnInit {
+export class FormComponent implements OnInit, OnDestroy {
 
   public articleForm!:FormGroup ;
   public topics$= this.topicService.getAllTopics();
   userId: number;
+  private httpSubscription!: Subscription;
 
   constructor(private fb: FormBuilder,private router: Router,
     private matSnackBar: MatSnackBar, private articleService: ArticleApiService, private topicService: TopicService)
@@ -31,7 +32,7 @@ export class FormComponent implements OnInit {
       content: this.articleForm?.value.content,
       topicId: this.articleForm?.value.topicId,
       userId: this.userId}as Article;
-    this.articleService.create(article).subscribe((messageResponse:MessageResponse)=> 
+      this.httpSubscription = this.articleService.create(article).subscribe((messageResponse:MessageResponse)=> 
     {this.matSnackBar.open(messageResponse.message, "Close", { duration: 3000});
     this.router.navigate(['articles']);}
     );
@@ -46,4 +47,7 @@ export class FormComponent implements OnInit {
   public back() {
     window.history.back();
   }
+  ngOnDestroy() {
+    this.httpSubscription.unsubscribe();
+}
 }

@@ -1,28 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { RegisterRequest } from '../../interfaces/register-request';
 import { AuthService } from '../../services/auth.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnDestroy{
   public onError = false;
+  private httpSubscription!: Subscription;
 
   public form = this.fb.group({
-    email: ['', [Validators.required, Validators.email]],
-    
-    name: [
-      '',
-      [Validators.required, Validators.min(3), Validators.max(20)],
-    ],
-    password: [
-      '',
-      [Validators.required, Validators.min(3), Validators.max(40)],
-    ],
+    email: ['', [Validators.required, Validators.email]],  
+    name: [  '', [Validators.required, Validators.min(4), Validators.max(20)], ],
+    password: [ '', [Validators.required, Validators.min(4), Validators.max(40)],],
   });
 
   constructor(
@@ -33,7 +28,7 @@ export class RegisterComponent {
 
   public submit(): void {
     const registerRequest = this.form.value as RegisterRequest;
-    this.authService.register(registerRequest).subscribe(
+    this.httpSubscription = this.authService.register(registerRequest).subscribe(
       () => { this.router.navigate(['login'])
     }, error => this.onError = true)
   ;
@@ -41,4 +36,7 @@ export class RegisterComponent {
   public back() {
     window.history.back();
   }
+  ngOnDestroy() {
+    this.httpSubscription.unsubscribe();
+}
 }
