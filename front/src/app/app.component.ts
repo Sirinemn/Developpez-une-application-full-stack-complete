@@ -18,7 +18,6 @@ export class AppComponent {
   ) {}
 
   public ngOnInit(): void {
-    debugger
     this.autoLog();
   }
 

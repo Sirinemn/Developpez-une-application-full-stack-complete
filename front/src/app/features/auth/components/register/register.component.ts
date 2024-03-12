@@ -15,7 +15,7 @@ export class RegisterComponent {
   public form = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
     
-    lastName: [
+    name: [
       '',
       [Validators.required, Validators.min(3), Validators.max(20)],
     ],
@@ -33,10 +33,10 @@ export class RegisterComponent {
 
   public submit(): void {
     const registerRequest = this.form.value as RegisterRequest;
-    this.authService.register(registerRequest).subscribe({
-      next: (_: void) => this.router.navigate(['/login']),
-      error: (_) => (this.onError = true),
-    });
+    this.authService.register(registerRequest).subscribe(
+      () => { this.router.navigate(['login'])
+    }, error => this.onError = true)
+  ;
   }
   public back() {
     window.history.back();
