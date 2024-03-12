@@ -4,6 +4,7 @@ import { AuthService } from '../../services/auth.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-register',
@@ -13,6 +14,7 @@ import { Subscription } from 'rxjs';
 export class RegisterComponent implements OnDestroy{
   public onError = false;
   private httpSubscription!: Subscription;
+  public errorMessage: string = "";
 
   public form = this.fb.group({
     email: ['', [Validators.required, Validators.email]],  
@@ -30,8 +32,10 @@ export class RegisterComponent implements OnDestroy{
     const registerRequest = this.form.value as RegisterRequest;
     this.httpSubscription = this.authService.register(registerRequest).subscribe(
       () => { this.router.navigate(['login'])
-    }, error => this.onError = true)
-  ;
+    }, (error: HttpErrorResponse )=> {this.onError = true;
+      if(error.status == 400) this.errorMessage = " email or password already exist please try again"
+    }
+    );
   }
   public back() {
     window.history.back();

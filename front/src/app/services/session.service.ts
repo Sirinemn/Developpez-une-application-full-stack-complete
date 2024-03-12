@@ -19,10 +19,12 @@ export class SessionService {
     this.user = user;
     this.isLogged = true;
     this.next();
+    console.log(user);
   }
 
   public logOut(): void {
     localStorage.removeItem('token');
+    localStorage.removeItem('userID');
     this.user = undefined;
     this.isLogged = false;
     this.next();

@@ -29,7 +29,7 @@ public class AuthRepositoryBaseService implements AuthService{
 	@Override
 	public User save(RegisterRequest register) throws BadRequestException{
 		LocalDateTime now = LocalDateTime.now();
-		if (userRepository.existsByName(register.getName())) {
+		if (userRepository.existsByName(register.getName())|| userRepository.existsByEmail(register.getEmail())) {
 			throw new BadRequestException();
 		}
 		

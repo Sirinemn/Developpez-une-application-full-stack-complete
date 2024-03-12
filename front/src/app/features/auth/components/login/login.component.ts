@@ -6,7 +6,8 @@ import { Router } from '@angular/router';
 import { LoginRequest } from '../../interfaces/login-request';
 import { SessionInformation } from 'src/app/interfaces/sessionInformation.interface';
 import { User } from 'src/app/interfaces/user.interface';
-import { Subscription } from 'rxjs';
+import { Subscription, throwError } from 'rxjs';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -17,6 +18,7 @@ export class LoginComponent implements OnDestroy{
   public hide = true;
   public onError = false;
   private httpSubscription!: Subscription;
+  public errorMessage: string = "";
 
 
   public form = this.fb.group({
@@ -35,13 +37,16 @@ export class LoginComponent implements OnDestroy{
       (response: SessionInformation) => {
         localStorage.setItem('token', response.token);
         localStorage.setItem('userID', response.id.toString());
-        this.authService.me().subscribe((user: User) => {
+        this.authService.getUserById(response.id.toString()).subscribe((user: User) => {
           this.sessionService.logIn(user);
           this.router.navigate(['/articles'])
         });
         this.router.navigate(['/articles'])
       },
-      error => this.onError = true
+      (error:HttpErrorResponse) =>{
+        this.onError=true;
+        if(error.status==403) this.errorMessage= "Please verify your email or you password";
+      }
     );
   }
   public back() {

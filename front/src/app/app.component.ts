@@ -25,11 +25,6 @@ export class AppComponent {
     return this.sessionService.$isLogged();
   }
 
-  public logout(): void {
-    this.sessionService.logOut();
-    this.router.navigate(['']);
-  }
-
   public autoLog(): void {
     this.authService.me().subscribe({
     next:  (user: User) => {
