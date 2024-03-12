@@ -31,13 +31,13 @@ export class AppComponent {
   }
 
   public autoLog(): void {
-    this.authService.me().subscribe(
-      (user: User) => {
+    this.authService.me().subscribe({
+    next:  (user: User) => {
         this.sessionService.logIn(user);
       },
-      (_) => {
+     error: () => {
         this.sessionService.logOut();
       }
-    );
+  });
   }
 }
