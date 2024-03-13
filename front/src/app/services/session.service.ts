@@ -19,7 +19,6 @@ export class SessionService {
     this.user = user;
     this.isLogged = true;
     this.next();
-    console.log(user);
   }
 
   public logOut(): void {

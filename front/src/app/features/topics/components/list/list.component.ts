@@ -25,18 +25,8 @@ export class ListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.userId = JSON.parse(localStorage.getItem('userID')!);
-    this.httpSubscriptions.push(
-      this.userService.getTopics(this.userId).subscribe((list) => {
-        this.topicIdList = list.map((topic) => topic.id!);
-        this.httpSubscriptions.push(
-          this.topicService.getAllTopics().subscribe((result) => {
-            this.topics = result.topics.filter(
-              (topic) => !this.topicIdList.includes(topic.id!)
-            );
-          })
-        );
-      })
-    );
+    this.getTableTopics();
+
   }
 
   subscribe(id: number): void {
@@ -51,9 +41,24 @@ export class ListComponent implements OnInit, OnDestroy {
           this.matSnackBar.open(commentResponse.message, 'Close', {
             duration: 3000,
           });
-          window.location.reload();
+          this.getTableTopics();
         })
     );
+  }
+  public getTableTopics():Topic[]{
+    this.httpSubscriptions.push(
+      this.userService.getTopics(this.userId).subscribe((list) => {
+        this.topicIdList = list.map((topic) => topic.id!);
+        this.httpSubscriptions.push(
+          this.topicService.getAllTopics().subscribe((result) => {
+            this.topics = result.topics.filter(
+              (topic) => !this.topicIdList.includes(topic.id!)
+            );
+          })
+        );
+      })
+    );
+    return this.topics ;
   }
   ngOnDestroy(): void {
     this.httpSubscriptions.forEach(subscribtion=> subscribtion.unsubscribe());

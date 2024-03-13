@@ -16,7 +16,6 @@ import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 })
 export class LoginComponent implements OnDestroy{
   public hide = true;
-  public onError = false;
   private httpSubscription!: Subscription;
   public errorMessage: string = "";
 
@@ -44,8 +43,8 @@ export class LoginComponent implements OnDestroy{
         this.router.navigate(['/articles'])
       },
       (error:HttpErrorResponse) =>{
-        this.onError=true;
-        if(error.status==403) this.errorMessage= "Please verify your email or you password";
+        if(error.status == 403) this.errorMessage= "Please verify your email or you password";
+        else this.errorMessage= " Something bad happened please try again later"
       }
     );
   }

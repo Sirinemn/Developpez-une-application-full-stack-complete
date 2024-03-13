@@ -12,7 +12,6 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent implements OnDestroy{
-  public onError = false;
   private httpSubscription!: Subscription;
   public errorMessage: string = "";
 
@@ -32,8 +31,9 @@ export class RegisterComponent implements OnDestroy{
     const registerRequest = this.form.value as RegisterRequest;
     this.httpSubscription = this.authService.register(registerRequest).subscribe(
       () => { this.router.navigate(['login'])
-    }, (error: HttpErrorResponse )=> {this.onError = true;
-      if(error.status == 400) this.errorMessage = " email or password already exist please try again"
+    }, (error: HttpErrorResponse )=> {
+      if(error.status == 400) this.errorMessage = " email or name already exist please try again";
+      else this.errorMessage= " Something bad happened please try again later";
     }
     );
   }

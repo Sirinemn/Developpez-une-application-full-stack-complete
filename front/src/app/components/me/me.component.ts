@@ -19,7 +19,7 @@ export class MeComponent implements OnInit {
   public userId!: string;
   private httpSubscriptions: Subscription[] = [];
 
-  public topics$!: Observable<Topic[]>;
+  public topics!: Topic[];
   meForm: FormGroup = this.fb.group({
     name: ['', [Validators.required]],
     email: ['', [Validators.required]],
@@ -40,7 +40,7 @@ export class MeComponent implements OnInit {
       this.user = user;
       this.initForm(this.user);
     }));
-    this.topics$ = this.userService.getTopics(this.userId?.toString());
+    this.getTable();
   }
   public logout(): void {
     this.sessionService.logOut();
@@ -59,16 +59,18 @@ export class MeComponent implements OnInit {
         this.matSnackBar.open(messageResponse.message, 'Close', {
           duration: 3000,
         });
-        window.location.reload();
       }));
   }
   public unsubscribe(topicId: number) {
-    this.httpSubscriptions.push(this.userService.unsbscribe(this.userId, topicId.toString()).subscribe(()=>  window.location.reload()
-    ));
+    this.httpSubscriptions.push(this.userService.unsbscribe(this.userId, topicId.toString()).subscribe(()=> this.getTable()));
   }
   private initForm(user?: User): void {
     this.meForm.controls['name'].setValue(user?.name);
     this.meForm.controls['email'].setValue(user?.email);
+  }
+  public getTable(): Topic[]{
+    this.httpSubscriptions.push(this.userService.getTopics(this.userId?.toString()).subscribe(list => this.topics=list));
+    return this.topics;
   }
   ngOnDestroy(): void {
     this.httpSubscriptions.forEach(subscribtion=> subscribtion.unsubscribe());

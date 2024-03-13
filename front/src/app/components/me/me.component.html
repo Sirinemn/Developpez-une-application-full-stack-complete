@@ -45,7 +45,7 @@
       <mat-card-title class="m0"></mat-card-title>
     </mat-card-header>
     <div class="items" fxLayout="row wrap" fxLayout.lt-md="column">
-      <mat-card class="item" *ngFor="let topic of topics$ | async" fxFlex>
+      <mat-card class="item" *ngFor="let topic of topics" fxFlex>
         <mat-card-header>
           <mat-card-title>{{ topic.name }}</mat-card-title>
         </mat-card-header>
