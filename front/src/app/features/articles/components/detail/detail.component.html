@@ -38,7 +38,7 @@
             <h2>Commentaires</h2>
         </mat-card-title>
         <div class="items" fxLayout="row" fxLayout.lt-md="column">
-            <mat-card class="item" *ngFor="let comment of (comments$ | async)?.comments" fxFlex>
+            <mat-card class="item" *ngFor="let comment of comments" fxFlex>
                 
                   <mat-card-subtitle>
                     Auteur : {{ comment.userName}}
